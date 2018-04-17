@@ -19,10 +19,10 @@ Car
 
 
 Uber
-->requestRide()
-->transaction()
-->account()
-->bankaccount()
+->requestRide
+->transaction
+->account
+->bankaccount
 ->debitcard
 
 Alcohol Sensor
