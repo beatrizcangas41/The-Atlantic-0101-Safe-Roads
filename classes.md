@@ -19,7 +19,11 @@ Car
 
 
 Uber
-->
+->requestRide
+->transaction
+->account
+->bankaccount
+->debitcard
 
 Alcohol Sensor
 
