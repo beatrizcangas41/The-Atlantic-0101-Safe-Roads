@@ -15,8 +15,8 @@ Location::Location() {
 
 Location::Location(int zoom) {
     this->zoom = zoom;
-    this->lattitude = getRandom(26.3717, 26.3718);
-    this->longitude = getRandom(-80.1009, -80.1012);
+    this->lattitude = getRandom(SOUTH_BOUNDS, NORTH_BOUNDS);
+    this->longitude = getRandom(WEST_BOUNDS, EAST_BOUNDS);
 }
 
 Location::Location(int zoom, double lat, double lon) {
@@ -26,14 +26,14 @@ Location::Location(int zoom, double lat, double lon) {
 }
 
 double Location::getRandom(double lower, double upper) {
-    double coordinate;
+    double coordinate = 0;
 //    sleep(1);
-    srand(time(NULL));
+//    srand(time(NULL));
 //    return number = lower + (0.5 - ((double) rand())/RAND_MAX)*upper;
-
 
     double random = (double)rand() / RAND_MAX;
     return coordinate = lower + random * (upper - lower);
+
 }
 
 double Location::getLattitude() {

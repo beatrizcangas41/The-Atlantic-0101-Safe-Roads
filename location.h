@@ -10,6 +10,14 @@
 
 #include <iostream>
 #include <string>
+#include <random>
+#include <iomanip>
+#include <ctime>
+
+#define NORTH_BOUNDS 26.374765
+#define SOUTH_BOUNDS 26.365576
+#define EAST_BOUNDS -80.097378
+#define WEST_BOUNDS -80.107377
 
 using namespace std;
 

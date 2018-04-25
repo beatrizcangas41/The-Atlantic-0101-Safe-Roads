@@ -31,7 +31,7 @@ string Connection::generateGoogleMap(bool exact) {
     urlString = "https://maps.googleapis.com/maps/api/staticmap?center=";
     urlString += lat + "," + lon;
     if(exact) {
-        urlString += "&markers=color:red%7Clabel:L%7C";
+        urlString += "&markers=color:red%7Clabel:D%7C";
         urlString += lat + "," + lon;
         zoom = location->getZoom() + 1;
     } else {
@@ -150,12 +150,15 @@ void Connection::sendEmail(char* data) {
 }
 
 void Connection::print() {
+    cout << setprecision(8);
     cout << location->getLattitude() << endl;
     cout << location->getLongitude() << endl;
-    cout << this->generateGoogleMap(false) << endl;
+//    cout << this->generateGoogleMap(false) << endl;
 }
 
 void Connection::test() {
+    srand(time(NULL));
+
     Connection aConnection;
     aConnection.getLocation();
     aConnection.print();
