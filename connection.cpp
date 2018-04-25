@@ -10,10 +10,37 @@
 Connection::Connection() {
     json = 0;
     data = 0;
+    location = getLocation();
 }
 
 Connection::~Connection() {
 
+}
+
+Location* Connection::getLocation() {
+    location = new Location(15);
+    return location;
+}
+
+string Connection::generateGoogleMap(bool exact) {
+    string urlString;
+    string lat = to_string(location->getLattitude());
+    string lon = to_string(location->getLongitude());
+    int zoom =0;
+
+    urlString = "https://maps.googleapis.com/maps/api/staticmap?center=";
+    urlString += lat + "," + lon;
+    if(exact) {
+        urlString += "&markers=color:red%7Clabel:L%7C";
+        urlString += lat + "," + lon;
+        zoom = location->getZoom() + 1;
+    } else {
+        zoom = location->getZoom() - 2;
+    }
+    urlString += "&zoom=" + to_string(zoom) + "&size=600x300&maptype=roadmap";
+    urlString += "&key=";
+    urlString += GOOGLE_API_KEY;
+    return urlString;
 }
 
 char* Connection::generateEmailJSONString(string email, string message) {
@@ -53,7 +80,7 @@ char* Connection::generateEmailJSONString(string email, string message) {
     val.SetString(subject.c_str(), static_cast<SizeType>(subject.length()), allocator);
     d.AddMember("subject", val, allocator);
 
-    string type = "text/plain";
+    string type = "text/html";
     val.SetString(type.c_str(), static_cast<SizeType>(type.length()), allocator);
     contentObj.AddMember("type", val, allocator);
     string value = message;
@@ -74,13 +101,19 @@ char* Connection::generateEmailJSONString(string email, string message) {
 }
 
 void Connection::sendMessgaeToContact(string email) {
-    string message = "This is a message for a contact.";
+    string message = "<p>This is a message for a contact.</p>";
+    message += "<img src=\"";
+    message += generateGoogleMap(true);
+    message += "\">";
     char* data = Connection::generateEmailJSONString(email, message);
     sendEmail(data);
 }
 
 void Connection::sendMessageToDriver(string email) {
-    string message = "This is a message for a driver.";
+    string message = "<p>This is a message for a driver.</p>";
+    message += "<img src=\"";
+    message += generateGoogleMap(false);
+    message += "\">";
     char* data = Connection::generateEmailJSONString(email, message);
     sendEmail(data);
 }
@@ -117,11 +150,16 @@ void Connection::sendEmail(char* data) {
 }
 
 void Connection::print() {
-
+    cout << location->getLattitude() << endl;
+    cout << location->getLongitude() << endl;
+    cout << this->generateGoogleMap(false) << endl;
 }
 
 void Connection::test() {
     Connection aConnection;
+    aConnection.getLocation();
+    aConnection.print();
+
     aConnection.sendMessgaeToContact("to email");
     aConnection.sendMessageToDriver("to email");
 }
