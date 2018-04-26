@@ -17,7 +17,7 @@ GPS::~GPS() {
     longitude = 0;
 }
 
-void GPS::getLocation() {
+void GPS::getCoordinates() {
     this->lattitude = getRandom(SOUTH_BOUNDS, NORTH_BOUNDS);
     this->longitude = getRandom(WEST_BOUNDS, EAST_BOUNDS);
 }
@@ -54,7 +54,7 @@ void GPS::test() {
     srand(time(NULL));
 
     GPS aGPS;
-    aGPS.getLocation();
+    aGPS.getCoordinates();
     aGPS.print();
 }
 

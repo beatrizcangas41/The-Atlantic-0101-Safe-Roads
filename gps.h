@@ -25,7 +25,7 @@ class GPS {
 public:
     GPS();
     virtual ~GPS();
-    void getLocation();
+    void getCoordinates();
     double getRandom(double lower, double upper);
     double getLattitude();
     void setLattitude(double lattitude);

@@ -27,7 +27,7 @@ Location::Location(int zoom) {
 
 void Location::getLocation() {
     GPS* pGPS = new GPS();
-    pGPS->getLocation();
+    pGPS->getCoordinates();
     lattitude = pGPS->getLattitude();
     longitude = pGPS->getLongitude();
     delete pGPS;
@@ -90,7 +90,7 @@ void Location::save(string fileName) {
 
 bool Location::compare() {
     GPS* pCompare = new GPS();
-    pCompare->getLocation();
+    pCompare->getCoordinates();
     double tmpLat = pCompare->getLattitude();
     double tmpLon = pCompare->getLongitude();
     delete pCompare;
