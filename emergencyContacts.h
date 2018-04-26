@@ -1,9 +1,14 @@
-#include "contacts.h"
-#define MAX_CONTACTS_SIZE 3
-//#include "contactsException.h"
+
 #ifndef EMERGENCYCONTACTS_H
 #define EMERGENCYCONTACTS_H
+//#include "contactsException.h"
 
+#include <fstream>
+#include "contacts.h"
+
+using namespace std;
+
+#define MAX_CONTACTS_SIZE 3
 class EmergencyContacts: public Contacts
 {
 public:
@@ -13,6 +18,7 @@ public:
     void eContacts();
     void addContact(string name, string number, string email); //throw (MaxException);
     void deleteContact();
+    void eSave(string fileName);    
     static void etest();
     void eprint();
     static void eProcess();
@@ -20,5 +26,5 @@ private:
     int size;
     Contacts* pContacts[MAX_CONTACTS_SIZE];
     
-    #endif
 };
+    #endif

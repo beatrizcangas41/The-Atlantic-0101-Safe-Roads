@@ -1,6 +1,5 @@
-#include "contacts.h"
 #include "emergencyContacts.h"
-#include "emergencyContacts.h"
+#include <fstream>
 
  EmergencyContacts::EmergencyContacts()
  {
@@ -43,6 +42,24 @@ void EmergencyContacts::addContact(string name, string number, string email) //t
          
      }
 }
+void EmergencyContacts::eSave(string fileName)
+{
+
+    ofstream out("emergencyContacts.txt");
+    if(out.is_open()) {
+        int count = 0;
+    do {
+        //for (int i = 0; i < 3; i++) {
+            out << pContacts[count]->getName() << endl;
+           // out << pContacts[count]->getEmailAddress() << endl;
+            //out << pContacts[count]->getPhoneNumber() << endl;
+            count++;
+        } while(count < 3);
+    } else {
+        cout << "Could not open file to write" << endl;
+    }
+    out.close();
+} 
 
 void  EmergencyContacts::eprint()
 {
@@ -57,12 +74,15 @@ void  EmergencyContacts::eprint()
 void  EmergencyContacts::etest()
 {
      EmergencyContacts eContacts;
-    eContacts.addContact("bob","eNum","emailadres");
-        eContacts.eprint();
+     eContacts.addContact("bob","eNum","emailadres");
+     eContacts.addContact("sam","eNum","emailadres");
+    eContacts.eprint();
+    eContacts.eSave("test.txt");
     
-     ofstream out("emergencyContacts.txt");
+     /*ofstream out("emergencyContacts.txt");
         if(out.is_open())
         {
+            for (int i = 0; i < MAX_CONTACTS_SIZE; i++)
             eContacts.save(&out);
             
         }
@@ -71,8 +91,10 @@ void  EmergencyContacts::etest()
             cout<<"Can't open file.";
         }
             
-            out.close();
+            out.close();*/
 }
+
+
 
 void  EmergencyContacts::eProcess()
 {
@@ -98,19 +120,17 @@ void  EmergencyContacts::eProcess()
         eContacts.addContact(eName,eNum,eAddress);
         eContacts.eprint();
         
-        ofstream out("emergencyContacts.txt");
-        if(out.is_open())
-        {
-            eContacts.save(&out);
             
-        }
-        else
-        {
-            cout<<"Can't open file.";
-        }
-            
-            out.close();
+                
+
         
+    }
+    else if( menuChoice==2)
+    {
+        cout<<"Goodbye!";
+        
+                eContacts.eSave("emergencyContacts.txt");
+
     }
     
     }while(menuChoice!=2);
@@ -123,7 +143,7 @@ void  EmergencyContacts::eProcess()
     
     cout << "Contacts: " << endl << endl;
     
-    /* for (int i = 1; i <= MAX_CONTACTS_SIZE; i++) 
+     for (int i = 1; i <= MAX_CONTACTS_SIZE; i++) 
     {
     cout << "Contact " << i << " the name is: " << pContacts[i] << endl;
     pContacts[i]->eprint();

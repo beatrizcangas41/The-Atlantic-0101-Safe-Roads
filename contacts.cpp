@@ -60,7 +60,7 @@
         
     }
     
-        void Contacts::save(ofstream* out)
+        /*void Contacts::save(ofstream* out)
         {
             *out <<name<<endl;
             *out<<phoneNumber<<endl;
@@ -80,51 +80,8 @@
         (*in).getline(cont,MAX_SIZE);
         aContacts->setEmailAddress(cont);
         return aContacts;
-    }
-    /*void Contacts::save()
-    {
-        ofstream out("contacts.txt");
-        
-        if(out.is_open())
-        {
-            out<<name<<endl;
-            out<<phoneNumber<<endl;
-            out<<emailAddress<<endl;
-        }
-        else
-        {
-            cout<<" Information not found!"<<endl;
-            //exception COME BACK
-        }
-        
-        out.close();
-    }
-Contacts Contacts::load()
-    {
-        ifstream in ("contacts.txt");
-        Contacts sContacts;
-        if(in.is_open())
-        {
-            char cont[2500];
-            in.getline(cont, 2500);
-            Contacts sContacts(cont);
-            in.getline(cont, 2500);
-            sContacts.setPhoneNumber(cont);
-            in.getline(cont, 2500);
-            sContacts.setEmailAddress(cont);
-        }
-        
-        else{
-             cout<<" Information not found!"<<endl;
-            //exception COME BACK
-            
-        }
-        
-        in.close();
-        
-        return sContacts;
-        
     }*/
+    
     
     
     
@@ -145,7 +102,7 @@ Contacts Contacts::load()
         Contacts aContacts;
         
         
-        aContacts.setName("Samiam");
+        /*aContacts.setName("Samami");
         aContacts.setPhoneNumber("305 202 9732");
         aContacts.setEmailAddress("Beatriz@yahoo.com");
         cout<<"testing...." << endl << endl;
@@ -174,6 +131,7 @@ Contacts Contacts::load()
         in.close();
         //Contacts c = Contacts::load();
         //c.print();
+         * */
     }
     
     
