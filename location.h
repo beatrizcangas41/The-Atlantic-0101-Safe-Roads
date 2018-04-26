@@ -9,15 +9,12 @@
 #define LOCATION_H_
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <random>
 #include <iomanip>
 #include <ctime>
-
-#define NORTH_BOUNDS 26.374765
-#define SOUTH_BOUNDS 26.365576
-#define EAST_BOUNDS -80.097378
-#define WEST_BOUNDS -80.107377
+#include "gps.h"
 
 using namespace std;
 
@@ -25,19 +22,22 @@ class Location {
 public:
     Location();
     Location(int zoom);
-    Location(int zoom, double lat, double lon);
     virtual ~Location();
+    void getLocation();
+    void getLocation(double lat, double lon);
     double getLattitude();
     void setLattitude(double lat);
     double getLongitude();
     void setLongitude(double lon);
     int getZoom();
     void setZoom(int zoom);
+    void load(string fileName);
+    void save(string fileName);
+    bool compare();
     void print();
     static void test();
 
 private:
-    double getRandom(double lower, double upper);
     double lattitude;
     double longitude;
     int zoom;

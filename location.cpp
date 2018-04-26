@@ -13,27 +13,30 @@ Location::Location() {
     longitude = 0;
 }
 
+Location::~Location() {
+    zoom = 0;
+    lattitude = 0;
+    longitude = 0;
+}
+
 Location::Location(int zoom) {
     this->zoom = zoom;
-    this->lattitude = getRandom(SOUTH_BOUNDS, NORTH_BOUNDS);
-    this->longitude = getRandom(WEST_BOUNDS, EAST_BOUNDS);
+    lattitude = 0;
+    longitude = 0;
 }
 
-Location::Location(int zoom, double lat, double lon) {
-    this->zoom = zoom;
-    this->lattitude = lat;
-    this->longitude = lon;
+void Location::getLocation() {
+    GPS* pGPS = new GPS();
+    pGPS->getLocation();
+    lattitude = pGPS->getLattitude();
+    longitude = pGPS->getLongitude();
+    delete pGPS;
+    pGPS = 0;
 }
 
-double Location::getRandom(double lower, double upper) {
-    double coordinate = 0;
-//    sleep(1);
-//    srand(time(NULL));
-//    return number = lower + (0.5 - ((double) rand())/RAND_MAX)*upper;
-
-    double random = (double)rand() / RAND_MAX;
-    return coordinate = lower + random * (upper - lower);
-
+void Location::getLocation(double lat, double lon) {
+    lattitude = lat;
+    longitude = lon;
 }
 
 double Location::getLattitude() {
@@ -60,18 +63,65 @@ void Location::setZoom(int zoom) {
     this->zoom = zoom;
 }
 
+void Location::load(string fileName) {
+    ifstream in(fileName);
+    if(in.is_open()) {
+        char str[100];
+        in.getline(str,100);
+        lattitude = atof(str);
+        in.getline(str,100);
+        longitude = atof(str);
+    }else{
+        cout << "Could not open file to read" << endl;
+    }
+    in.close();
+}
+
+void Location::save(string fileName) {
+    ofstream out(fileName);
+    if(out.is_open()){
+        out << lattitude << endl;
+        out << longitude << endl;
+    }else{
+        cout << "Could not open file to write" << endl;
+    }
+    out.close();
+}
+
+bool Location::compare() {
+    GPS* pCompare = new GPS();
+    pCompare->getLocation();
+    double tmpLat = pCompare->getLattitude();
+    double tmpLon = pCompare->getLongitude();
+    delete pCompare;
+    pCompare = 0;
+    if (lattitude < tmpLat - 0.03 || lattitude > tmpLat + 0.03) {
+        return 0;
+    }
+    if (lattitude < tmpLon - 0.03 || longitude > tmpLon + 0.03) {
+        return 0;
+    }
+    return 1;
+}
+
 void Location::print() {
     cout << "zoom: " << zoom << endl;
     cout << "lat:  " << lattitude << endl;
     cout << "long: " << longitude << endl;
+    cout << this->compare() << endl;
 }
 
 void Location::test() {
+    srand(time(NULL));
+
     Location aLocation(15);
+    aLocation.load("location.txt");
     aLocation.print();
+    aLocation.getLocation();
+    aLocation.getLocation(26.268,-80.1021);
+    aLocation.print();
+    aLocation.save("location.txt");
 }
 
-Location::~Location() {
-    // TODO Auto-generated destructor stub
-}
+
 
