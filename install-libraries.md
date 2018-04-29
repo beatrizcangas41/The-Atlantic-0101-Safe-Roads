@@ -1,6 +1,6 @@
-#Install Libraries
+# Install Libraries
 
-#Mac
+## Mac
 
 1. Make sure you pull the latest version.  There is a file called "libtwitcurl.dylib" in the "lib" folder.
 2. Go to Codelite and click on the project settings:
