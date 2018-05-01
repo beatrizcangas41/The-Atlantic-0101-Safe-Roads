@@ -1,4 +1,3 @@
-
 #include "contacts.h"
  
 
@@ -102,13 +101,13 @@
         Contacts aContacts;
         
         
-        /*aContacts.setName("Samami");
+        aContacts.setName("Samami");
         aContacts.setPhoneNumber("305 202 9732");
         aContacts.setEmailAddress("Beatriz@yahoo.com");
         cout<<"testing...." << endl << endl;
         aContacts.print();
         
-        cout << "\n\n Testing the getName() function: " << endl;
+       /* cout << "\n\n Testing the getName() function: " << endl;
         cout << "name: " << aContacts.getName() << endl << endl;
         
         //aContacts.save();
@@ -130,8 +129,5 @@
         aContacts.print();
         in.close();
         //Contacts c = Contacts::load();
-        //c.print();
-         * */
+        //c.print();*/
     }
-    
-    

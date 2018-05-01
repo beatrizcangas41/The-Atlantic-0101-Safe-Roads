@@ -1,5 +1,8 @@
 #include "emergencyContacts.h"
-#include <fstream>
+#include<fstream>
+#include<string>
+using namespace std;
+
 
  EmergencyContacts::EmergencyContacts()
  {
@@ -24,7 +27,7 @@
      
  }
 
-void EmergencyContacts::addContact(string name, string number, string email) //throw(MaxException)
+void EmergencyContacts::addContact(string name, string number, string email) throw(MaxException)
 {
     
     if(size < MAX_CONTACTS_SIZE)
@@ -37,8 +40,7 @@ void EmergencyContacts::addContact(string name, string number, string email) //t
     }
      else 
      {
-         cout<<"Invalid option";
-         //exception......
+         throw MaxException();
          
      }
 }
@@ -46,21 +48,60 @@ void EmergencyContacts::eSave(string fileName)
 {
 
     ofstream out("emergencyContacts.txt");
-    if(out.is_open()) {
-        int count = 0;
-    do {
-        //for (int i = 0; i < 3; i++) {
-            out << pContacts[count]->getName() << endl;
-           // out << pContacts[count]->getEmailAddress() << endl;
-            //out << pContacts[count]->getPhoneNumber() << endl;
-            count++;
-        } while(count < 3);
-    } else {
+    if(out.is_open()) 
+    {
+        
+        for (int i = 0; i < size; i++) {
+            out << pContacts[i]->getName() << endl;
+            out << pContacts[i]->getEmailAddress() << endl;
+            out << pContacts[i]->getPhoneNumber() << endl;
+        }
+    } else 
+    {
         cout << "Could not open file to write" << endl;
     }
+    out<<'\0';
     out.close();
 } 
 
+
+void EmergencyContacts::eLoad(string fileName)
+{
+    ifstream in("emergencyContacts.txt");
+    cout<<"This code was run\n";
+	if (in.is_open())  
+	{
+		for (int i = 0 ; i < 3; i++) {
+				char s[100];
+
+            
+				in.getline(s, 100);
+                if(s[0]!='\0')
+        {
+				pContacts[i]->setName(s);
+				cout << "Name: " << pContacts[i]->getName() << endl;
+				
+                in.getline(s, 100);
+				pContacts[i]->setEmailAddress(s);
+				cout << "Email: " << pContacts[i]->getEmailAddress() << endl;
+				
+				in.getline(s, 100);
+				pContacts[i]->setPhoneNumber(s);
+				cout << "Phone Number: " << pContacts[i]->getPhoneNumber() << endl;
+		}
+        else{
+            break;
+        }
+        }
+		}
+	
+	
+	else {
+			cout << " Could not open file to write " << endl;
+	}
+		
+	in.close();
+}
 void  EmergencyContacts::eprint()
 {
      for(int i=0;i<size;i++)
@@ -74,10 +115,8 @@ void  EmergencyContacts::eprint()
 void  EmergencyContacts::etest()
 {
      EmergencyContacts eContacts;
-     eContacts.addContact("bob","eNum","emailadres");
-     eContacts.addContact("sam","eNum","emailadres");
-    eContacts.eprint();
-    eContacts.eSave("test.txt");
+    eContacts.addContact("bob","eNum","emailadres");
+        eContacts.eprint();
     
      /*ofstream out("emergencyContacts.txt");
         if(out.is_open())
@@ -130,7 +169,7 @@ void  EmergencyContacts::eProcess()
         cout<<"Goodbye!";
         
                 eContacts.eSave("emergencyContacts.txt");
-
+                eContacts.eLoad("emergencyContacts.txt");
     }
     
     }while(menuChoice!=2);

@@ -1,10 +1,10 @@
-
 #ifndef EMERGENCYCONTACTS_H
 #define EMERGENCYCONTACTS_H
 //#include "contactsException.h"
 
 #include <fstream>
 #include "contacts.h"
+#include "contactsException.h"
 
 using namespace std;
 
@@ -16,9 +16,10 @@ public:
     ~EmergencyContacts();
     
     void eContacts();
-    void addContact(string name, string number, string email); //throw (MaxException);
+    void addContact(string name, string number, string email) throw (MaxException);
     void deleteContact();
     void eSave(string fileName);    
+    void eLoad(string fileName);    
     static void etest();
     void eprint();
     static void eProcess();

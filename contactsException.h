@@ -1,13 +1,11 @@
+#ifndef CONTACTSEXCEPTION_H
+#define CONTACTSEXCEPTION_H
 #include <iostream>
 #include <string>
 using namespace std;
 
 
-#ifndef CONTACTSEXCEPTION_H
-#define CONTACTSEXCEPTION_H
 
-#include "contacts.h"
-#include "driver.h"
 
 
     class VirtualException
@@ -39,19 +37,19 @@ protected:
 };
 
 
-    class DayException:public VirtualException
+    class AgeException:public VirtualException
     {
         
 public:
         
-        DayException()
+        AgeException()
         {
             
             errorCode=101;
-            message= "Day need's to be between 1 or 31. Error code:";
+            message= "You are Under age! Error code:";
         }
         
-       virtual ~DayException()
+       virtual ~AgeException()
         {
             
             
@@ -115,6 +113,6 @@ public:
         };
 
 
-
+    
 
 #endif

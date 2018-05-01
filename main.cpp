@@ -9,11 +9,11 @@ int main()
      //EmergencyContacts::etest();
     
     
-    EmergencyContacts::eProcess();
-    //Driver::dtest();
+    //EmergencyContacts::eProcess();
+    Driver::dtest();
     
     }
-    catch(DayException& e)
+    catch(AgeException& e)
     {
         e.print1();
     }
@@ -26,6 +26,11 @@ int main()
     catch (YearException& e)
     {
         
+        e.print1();
+    }
+    
+    catch (MaxException& e)
+    {
         e.print1();
     }
     
