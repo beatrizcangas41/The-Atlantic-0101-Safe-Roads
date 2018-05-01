@@ -32,17 +32,20 @@ void Car::save(){
 
 
 
-Car* Car::load(){
+bool Car::load(){
     ifstream in("car.txt");
-    Car* aCar = new Car();
-    char str[50];
-    in.getline(str,50);
-    aCar->setModel(str);
-    in.getline(str,50);
-    aCar->setMake(str);
-    in.getline(str,50);
-    aCar->setColor(str);
-    return aCar;
+    if(in){
+        char str[50];
+        in.getline(str,50);
+        setModel(str);
+        in.getline(str,50);
+        setMake(str);
+        in.getline(str,50);
+        setColor(str);
+        return true;
+    }else{
+        return false;
+    }
 }
 
 Car::~Car(){

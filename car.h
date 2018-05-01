@@ -30,7 +30,7 @@ public:
     string getColor();
     bool getLockStatus();
     void save();
-    Car* load();
+    bool load();
 private:
     string model;
     string make;
