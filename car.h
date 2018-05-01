@@ -11,6 +11,8 @@
 
 #include <string>
 #include "lockingdevice.h"
+#include <fstream>
+#include <iostream>
 using namespace std;
 
 class Car{
@@ -27,6 +29,8 @@ public:
     string getMake();
     string getColor();
     bool getLockStatus();
+    void save();
+    Car* load();
 private:
     string model;
     string make;

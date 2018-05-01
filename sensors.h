@@ -13,6 +13,7 @@
 #include "alcohol.h"
 #include "gps.h"
 #include "battery.h"
+#define LEGAL_LIMIT 0.08
 
 class Sensors{
 public:

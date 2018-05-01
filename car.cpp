@@ -18,8 +18,35 @@ Car::Car(string model, string make, string color){
     this->color = color;
 }
 
+void Car::save(){
+    ofstream out("car.txt");
+    if(out.is_open()){
+        out << model<<endl;
+        out << make<<endl;
+        out << color<<endl;
+    }else{
+        cout<<"Could not open file to write"<<endl;
+    }
+    out.close();
+}
+
+
+
+Car* Car::load(){
+    ifstream in("car.txt");
+    Car* aCar = new Car();
+    char str[50];
+    in.getline(str,50);
+    aCar->setModel(str);
+    in.getline(str,50);
+    aCar->setMake(str);
+    in.getline(str,50);
+    aCar->setColor(str);
+    return aCar;
+}
+
 Car::~Car(){
-    
+
 }
 
 int Car::lockCar(){
