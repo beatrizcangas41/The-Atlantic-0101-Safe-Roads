@@ -10,6 +10,27 @@
 #define SENSORS_H
 
 #include <iostream>
+#include "alcohol.h"
+#include "gps.h"
+#include "battery.h"
+
+class Sensors{
+public:
+    Sensors();
+    ~Sensors();
+    double calculateAverage();
+    double calculateVariance();
+    double calculateStDev();
+    void updateValues();
+    void activateBattery();
+    void deactivateBattery();
+    bool getBatteryStatus();
+    static void test();
+private:
+    Alcohol alcSensors[3];
+    Battery aBattery;
+    double recordedValues[3];
+};
 
 
 
