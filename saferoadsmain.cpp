@@ -26,16 +26,21 @@ using namespace std;
 
 void process() {
     try {
+//        Driver::dProcess();
+
+
 //        Driver::dtest();
         Driver aDriver;
 //        EmergencyContacts contacts;
 //
-        bool drivLoad = aDriver.dLoad("driver.txt");
-        cout << "Driver return: " << drivLoad << endl;
-//
-        if(!drivLoad) {
-           Driver::dtest();
-        }
+        aDriver.dLoad("driver.txt");
+        aDriver.print();
+
+//        cout << "Driver return: " << drivLoad << endl;
+
+//        if(!drivLoad) {
+//           Driver::dtest();
+//        }
 
 //        contacts.eLoad("emergencyContacts.txt");
 //        contacts.eprint();
@@ -46,6 +51,13 @@ void process() {
 //        if(!contactLoad) {
 //           EmergencyContacts::eProcess();
 //        }
+
+
+
+
+
+
+
 
         Sensors aSensor;
         Car aCar;
@@ -62,6 +74,7 @@ void process() {
             cout << "Lock status: " << aCar.getLockStatus() << endl;
 //            GPS aGPS;
 //            aGPS.getCoordinates();
+
             Location aLocation;
             aLocation.load("location.txt");
 
@@ -70,27 +83,33 @@ void process() {
             aLocation.getGeoData();
 //            aLocation.print();
 
-            aLocation.save("location.txt");
+//            aLocation.save("location.txt");
 
             Connection aConnection;
             aConnection.getLocation();
 //            aConnection.print();
 
-            for(int i=0; i < 3; i++) {
-                aConnection.sendMessgaeToContact("acraun@fau.edu", "Aubrey", "Craun");
-            }
+//            for(int i=0; i < 3; i++) {
+//                aConnection.sendMessgaeToContact("acraun@fau.edu", "Aubrey", "Craun");
+//            }
 
-            Twitter aTwitter;
-            aTwitter.getLocation();
-            aTwitter.sendTweet();
+//            Twitter aTwitter;
+//            aTwitter.getLocation();
+//            aTwitter.sendTweet();
 
             /* Timer goes here */
             cout << endl << endl << "Activating the battery.  Counting down 10 hours before sending driver the vehicle's location" << endl << endl;
             aSensor.activateBattery();
+//
+            string firstName;
+            string lastName;
+            string email;
+            email = aDriver.getEmailAddress();
+            firstName = aDriver.getFirstName();
+            lastName = aDriver.getLastName();
 
-//            string email = aDriver.getEmailAddress();
 
-            aConnection.sendMessageToDriver("acraun@fau.edu", "Laura", "Craun");
+            aConnection.sendMessageToDriver(email, firstName, lastName);
             aSensor.deactivateBattery();
             if(!aSensor.getBatteryStatus()) {
                 cout << "Battery deactivated." << endl;

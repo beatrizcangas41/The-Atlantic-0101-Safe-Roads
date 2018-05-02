@@ -5,9 +5,10 @@
 #include "contactsException.h"
 class Driver:public Contacts
 {
-    Driver();
     
 public:
+    Driver();
+
     void addContact(string fName, string lName, string number, string email);
     
     int getDay();
@@ -18,7 +19,7 @@ public:
     string getUberId();// still need to do load and save
     
     void dSave(string fileName);   
-    static void dLoad(string fileName);  
+    void dLoad(string fileName);
     
     void printD();
     static void dtest();

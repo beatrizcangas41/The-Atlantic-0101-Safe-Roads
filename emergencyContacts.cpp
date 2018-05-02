@@ -59,7 +59,7 @@ void EmergencyContacts::eLoad(string fileName)
         char s3[100];
         char s4[100];
         
-        for(int i; i < size; i++) {
+        for(int i =0; i < size; i++) {
             in >> s1;
             in >> s2;
             

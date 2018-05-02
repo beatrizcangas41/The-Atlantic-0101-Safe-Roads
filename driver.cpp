@@ -41,7 +41,7 @@ int Driver::getMonth()
         cin >> month;
 
         if(month > 12 || month <= 0) {
-            cout << "INVALID! Month needs to be betwwen 1-12";
+            cout << "INVALID! Month needs to be between 1-12";
         }
     } while(month > 12 || month <= 0);
     return month;
@@ -94,7 +94,7 @@ int Driver::calculateage(int day, int month, int year) throw(AgeException)
         cout << "\n Please enter Your month of birth:";
         cin >> monthB;
         if(monthB > 12 || monthB <= 0) {
-            cout << "INVALID! Month needs to be betwwen 1-12";
+            cout << "INVALID! Month needs to be between 1-12";
         }
     } while(monthB > 12 || monthB <= 0);
 
@@ -114,8 +114,8 @@ int Driver::calculateage(int day, int month, int year) throw(AgeException)
     cout << "Age: " << age << endl;
 
     if(age < 21) {
-
-        throw AgeException();
+        cout << "You are under 21." <<endl;
+//        throw AgeException();
     }
 
     return age;
@@ -185,14 +185,19 @@ void Driver::dLoad(string fileName)
         */
 
         in >> age;
-        cout << "Age: " << age << endl;
+        this->age = age;
+//        cout << "Age: " << age << endl;
         in >> s1;
+        firstName = s1;
         in >> s2;
-        cout << "name: " << s1 << " " << s2 << endl;
+        lastName = s2;
+//        cout << "name: " << s1 << " " << s2 << endl;
         in >> s3;
-        cout << "Email Address: " << s3 << endl;
+        emailAddress = s3;
+//        cout << "Email Address: " << s3 << endl;
         in >> s4;
-        cout << "Phone NUmber: " << s4 << endl;
+        phoneNumber = s4;
+//        cout << "Phone NUmber: " << s4 << endl;
         cout << endl;
         
     }
@@ -227,32 +232,37 @@ void Driver::dtest()
 
 void Driver::dProcess()
 {
-    Driver dProcess;
-    string first;
-    string last;
-    string phone;
-    string email; 
-    
-    cout << "Please enter first name: ";
-    cin >> first;
-    cout << "\nPlease enter last name: ";
-    cin >> last;
-    cout << "\nPlease enter phone name: ";
-    cin >> phone;
-    cout << "\nPlease enter email name: ";
-    cin >> email;
-    dProcess.addContact(first,last,phone,email);
-    cout << endl;
-    
-    int d = 0, m = 0, y = 0;
-    dProcess.calculateage(d, m, y);
-    
-    dProcess.getUberId();
-    
-    dProcess.printD();
-    
-    cout << endl;
-    cout << "Load and Save: " << endl;
-    dProcess.dSave("driver.txt");
-    dProcess.dLoad("driver.txt");
+    try {
+        Driver dProcess;
+        string first;
+        string last;
+        string phone;
+        string email;
+
+        cout << "Please enter first name: ";
+        cin >> first;
+        cout << "\nPlease enter last name: ";
+        cin >> last;
+        cout << "\nPlease enter phone number: ";
+        cin >> phone;
+        cout << "\nPlease enter email address: ";
+        cin >> email;
+        dProcess.addContact(first,last,phone,email);
+        cout << endl;
+
+        int d = 0, m = 0, y = 0;
+        dProcess.calculateage(d, m, y);
+
+        dProcess.getUberId();
+
+        dProcess.printD();
+
+        cout << endl;
+        cout << "Load and Save: " << endl;
+        dProcess.dSave("driver.txt");
+        dProcess.dLoad("driver.txt");
+    }
+    catch(VirtualException& e) {
+        e.print1();
+    }
 }

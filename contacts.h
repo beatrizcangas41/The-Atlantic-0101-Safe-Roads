@@ -35,10 +35,12 @@ public:
     static void test();
  
 private:
-     string phoneNumber;
+
+protected:
+    string phoneNumber;
+     string emailAddress;
      string firstName;
      string lastName;
-     string emailAddress;
 };
 
 
