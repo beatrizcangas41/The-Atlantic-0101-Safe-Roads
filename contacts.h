@@ -15,16 +15,17 @@ public:
 
     Contacts();
     Contacts(string name);
-    ~ Contacts();   // COME BACK LATER
+    ~Contacts();   // COME BACK LATER
     
-    string getName();
-    void setName(string name);
+    virtual string getName();
+    virtual void setName(string name);
     
-    string getPhoneNumber();
-    void setPhoneNumber(string phoneNumber);
+    virtual string getPhoneNumber();
+    virtual void setPhoneNumber(string phoneNumber);
     
-    string getEmailAddress();
-    void setEmailAddress(string emailAddress);
+    virtual string getEmailAddress();
+    virtual void setEmailAddress(string emailAddress);
+
     void save(ofstream* out);
     static Contacts* load(ifstream* in);
    // void save();

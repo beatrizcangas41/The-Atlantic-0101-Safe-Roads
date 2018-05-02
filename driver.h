@@ -7,9 +7,9 @@ class Driver:public Contacts
 {
     
     
-    Driver();
     
 public:
+    Driver();
     int getDay();
     int getMonth();
     int getYear();
@@ -17,8 +17,10 @@ public:
     
     string getUberId();// still need to do load and save
     
+
+
     void dSave(string fileName);   
-    static void dLoad(string fileName);  
+    bool dLoad(string fileName);
     
     void printD();
     static void dtest();

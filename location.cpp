@@ -8,7 +8,8 @@
 #include "location.h"
 
 Location::Location() {
-    zoom = 0;
+    pGeoLocate = 0;
+    zoom = 15;
     lattitude = 0;
     longitude = 0;
 }
@@ -17,15 +18,11 @@ Location::~Location() {
     zoom = 0;
     lattitude = 0;
     longitude = 0;
+    delete pGeoLocate;
+    pGeoLocate = 0;
 }
 
-Location::Location(int zoom) {
-    this->zoom = zoom;
-    lattitude = 0;
-    longitude = 0;
-}
-
-void Location::getLocation() {
+void Location::setLocation() {
     GPS* pGPS = new GPS();
     pGPS->getCoordinates();
     lattitude = pGPS->getLattitude();
@@ -34,7 +31,7 @@ void Location::getLocation() {
     pGPS = 0;
 }
 
-void Location::getLocation(double lat, double lon) {
+void Location::setLocation(double lat, double lon) {
     lattitude = lat;
     longitude = lon;
 }
@@ -57,10 +54,20 @@ void Location::setLongitude(double lon) {
 
 int Location::getZoom() {
     return zoom;
-
 }
+
 void Location::setZoom(int zoom) {
     this->zoom = zoom;
+}
+
+GeoLocate* Location::getGeoLocate() {
+    return pGeoLocate;
+}
+
+
+void Location::getGeoData() {
+    pGeoLocate = new GeoLocate;
+    pGeoLocate->getGeoData(lattitude, longitude);
 }
 
 void Location::load(string fileName) {
@@ -80,6 +87,7 @@ void Location::load(string fileName) {
 void Location::save(string fileName) {
     ofstream out(fileName);
     if(out.is_open()){
+        out << setprecision(10);
         out << lattitude << endl;
         out << longitude << endl;
     }else{
@@ -105,23 +113,27 @@ bool Location::compare() {
 }
 
 void Location::print() {
-    cout << "zoom: " << zoom << endl;
-    cout << "lat:  " << lattitude << endl;
-    cout << "long: " << longitude << endl;
-    cout << this->compare() << endl;
+    cout << setprecision(10);
+    cout << "Printing out 'aLocation' object..." << endl;
+    cout << "zoom:   " << zoom << endl;
+    cout << "lat:    " << lattitude << endl;
+    cout << "long:   " << longitude << endl;
+
+    cout << endl;
+    cout << "Printing 'pGeoLocate' object..." << endl;
+    pGeoLocate->print();
 }
 
 void Location::test() {
     srand(time(NULL));
 
-    Location aLocation(15);
+    Location aLocation;
     aLocation.load("location.txt");
+
+    aLocation.setLocation();
+//    aLocation.setLocation(26.268,-80.1021);
+    aLocation.getGeoData();
     aLocation.print();
-    aLocation.getLocation();
-    aLocation.getLocation(26.268,-80.1021);
-    aLocation.print();
+
     aLocation.save("location.txt");
 }
-
-
-

@@ -9,6 +9,12 @@
 #ifndef BATTERY_H
 #define BATTERY_H
 
+#include <iostream>
+#include <thread>
+#include <chrono>
+
+using namespace std;
+
 class Battery{
 public:
     Battery();

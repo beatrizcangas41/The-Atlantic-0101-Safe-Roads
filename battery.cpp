@@ -24,6 +24,11 @@ void Battery::activate(){
     /*    for future use    *
      code for activating a battery goes here */
     status = 1;
+    for(int i = 10; i>0; --i){
+        cout<< i<<endl;
+        this_thread::sleep_for(chrono::seconds(1));
+    }
+
 }
 
 void Battery::deactivate(){

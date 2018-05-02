@@ -14,33 +14,48 @@
 #include <random>
 #include <iomanip>
 #include <ctime>
+
+#include "libraries/rapidjson/document.h"
+#include "libraries/rapidjson/writer.h"
+#include "libraries/rapidjson/stringbuffer.h"
+#include "libraries/twitcurl/include/curl/curl.h"
+#include "geolocate.h"
 #include "gps.h"
 
+using namespace rapidjson;
 using namespace std;
 
 class Location {
 public:
     Location();
-    Location(int zoom);
     virtual ~Location();
-    void getLocation();
-    void getLocation(double lat, double lon);
-    double getLattitude();
-    void setLattitude(double lat);
-    double getLongitude();
-    void setLongitude(double lon);
-    int getZoom();
-    void setZoom(int zoom);
+    void setLocation();
+    void setLocation(double lat, double lon);
+    void getGeoData();
+    bool compare();
     void load(string fileName);
     void save(string fileName);
-    bool compare();
+
+    /* Getters */
+    double getLattitude();
+    double getLongitude();
+    int getZoom();
+    GeoLocate* getGeoLocate();
+
+    /* Setters */
+    void setLattitude(double lat);
+    void setLongitude(double lon);
+    void setZoom(int zoom);
+
     void print();
     static void test();
 
 private:
+    string google_key;
     double lattitude;
     double longitude;
     int zoom;
+    GeoLocate* pGeoLocate;
 };
 
 #endif /* LOCATION_H_ */

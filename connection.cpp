@@ -8,38 +8,57 @@
 #include "connection.h"
 
 Connection::Connection() {
+    staticMapsKey = loadApiKey("google_staticmaps_key.txt");
+    sendgridKey = loadApiKey("sendgrid_key.txt");
     json = 0;
     data = 0;
-    location = getLocation();
+    pLocation = 0;
 }
 
 Connection::~Connection() {
+    delete pLocation;
+}
 
+string Connection::loadApiKey(string fileName) throw(LoadingKeyException) {
+    char tmpkey[1024];
+    ifstream in(fileName);
+    if(in.is_open()) {
+        in.getline(tmpkey,1024);
+    } else {
+        throw LoadingKeyException();
+    }
+    in.close();
+    string key(tmpkey);
+    return key;
 }
 
 Location* Connection::getLocation() {
-    location = new Location(15);
-    return location;
+    pLocation = new Location();
+    pLocation->setLocation();
+    pLocation->getGeoData();
+    return pLocation;
 }
 
 string Connection::generateGoogleMap(bool exact) {
     string urlString;
-    string lat = to_string(location->getLattitude());
-    string lon = to_string(location->getLongitude());
-    int zoom =0;
+    string lat = to_string(pLocation->getLattitude());
+    string lon = to_string(pLocation->getLongitude());
+    int zoom = 0;
 
-    urlString = "https://maps.googleapis.com/maps/api/staticmap?center=";
-    urlString += lat + "," + lon;
-    if(exact) {
+    urlString = STATICMAPS_URL;
+    if (exact) {
+        urlString += lat + "," + lon;
         urlString += "&markers=color:red%7Clabel:D%7C";
         urlString += lat + "," + lon;
-        zoom = location->getZoom() + 1;
+        zoom = pLocation->getZoom() + 1;
     } else {
-        zoom = location->getZoom() - 2;
+        GeoLocate* pGeoLocate = pLocation->getGeoLocate();
+        urlString += pGeoLocate->getCity() + "," + pGeoLocate->getState();
+        zoom = pLocation->getZoom() - 2;
     }
     urlString += "&zoom=" + to_string(zoom) + "&size=600x300&maptype=roadmap";
     urlString += "&key=";
-    urlString += GOOGLE_API_KEY;
+    urlString += staticMapsKey;
     return urlString;
 }
 
@@ -71,7 +90,7 @@ char* Connection::generateEmailJSONString(string email, string message) {
     personalizations.PushBack(personalizationsObj, allocator);
     d.AddMember("personalizations", personalizations, allocator);
 
-    string fromEmail = "from email";
+    string fromEmail = "acraun@cdsi.fau.edu";
     val.SetString(fromEmail.c_str(), static_cast<SizeType>(fromEmail.length()), allocator);
     fromObj.AddMember("email", val, allocator);
     d.AddMember("from", fromObj, allocator);
@@ -100,8 +119,18 @@ char* Connection::generateEmailJSONString(string email, string message) {
     return str;
 }
 
-void Connection::sendMessgaeToContact(string email) {
-    string message = "<p>This is a message for a contact.</p>";
+void Connection::sendMessgaeToContact(string email, string fName, string lName) {
+    string message;
+    GeoLocate* loc = pLocation->getGeoLocate();
+
+    message = "<p>Your friend, "+ fName + " " + lName + ", has activated SafeRoads and is in need of assistance.</p>";
+    message += "<p>"+ fName +" is at (or near) the address of:</p>";
+    message += "<p>" + loc->getStreetNumber() + " " + loc->getStreet() + "<br>";
+    message += loc->getCity() + ", " + loc->getState() + " " + loc->getZip() + "</p>";
+
+    message += "<p>If you would like to contact "+fName+", call (XXX) XXX-XXXX.</p>";
+    message += "<p>{{{{{Uber stuff goes here}}}}</p>";
+
     message += "<img src=\"";
     message += generateGoogleMap(true);
     message += "\">";
@@ -109,10 +138,17 @@ void Connection::sendMessgaeToContact(string email) {
     sendEmail(data);
 }
 
-void Connection::sendMessageToDriver(string email) {
-    string message = "<p>This is a message for a driver.</p>";
+void Connection::sendMessageToDriver(string email, string fName, string lName) {
+    string message;
+    GeoLocate* loc = pLocation->getGeoLocate();
+
+    message = "<p>We see you used our SafeRoads service in the past 10 hours.</p>";
+    message += "<p>Your vehicle is at (or near) the address of:</p>";
+    message += "<p>" + loc->getStreetNumber() + " " + loc->getStreet() + "<br>";
+    message += loc->getCity() + ", " + loc->getState() + " " + loc->getZip() + "</p>";
+
     message += "<img src=\"";
-    message += generateGoogleMap(false);
+    message += generateGoogleMap(true);
     message += "\">";
     char* data = Connection::generateEmailJSONString(email, message);
     sendEmail(data);
@@ -125,7 +161,7 @@ void Connection::sendEmail(char* data) {
     curl = curl_easy_init();
     if(curl) {
         string apiKey = "Authorization: Bearer ";
-        apiKey.append(SENDGRID_KEY);
+        apiKey.append(sendgridKey);
         char* api = new char[apiKey.length() + 1];
         strcpy(api, apiKey.c_str());
 
@@ -133,8 +169,7 @@ void Connection::sendEmail(char* data) {
         chunk = curl_slist_append(chunk, api);
         chunk = curl_slist_append(chunk, "Content-Type: application/json");
 
-        response = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
         curl_easy_setopt(curl, CURLOPT_URL, SENDGRID_URL);
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
         curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, (long)strlen(data));
@@ -150,19 +185,34 @@ void Connection::sendEmail(char* data) {
 }
 
 void Connection::print() {
-    cout << setprecision(8);
-    cout << location->getLattitude() << endl;
-    cout << location->getLongitude() << endl;
-//    cout << this->generateGoogleMap(false) << endl;
+    cout << "Printing keys..." << endl;
+    cout << "static maps key: " << staticMapsKey << endl;
+    cout << "sendgrid key: " << sendgridKey << endl;
+
+    cout << endl << "Printing lat and long from 'Connection' class..." << endl;
+    cout << setprecision(10);
+    cout << pLocation->getLattitude() << endl;
+    cout << pLocation->getLongitude() << endl;
+    cout << endl;
+
+    pLocation->print();
+
+    cout << endl << "Printing specific location..." << endl;
+    cout << this->generateGoogleMap(true) << endl;
+    cout << endl << "Printing non-specific location..." << endl;
+    cout << this->generateGoogleMap(false) << endl;
 }
 
 void Connection::test() {
-    srand(time(NULL));
+    try {
+        Connection aConnection;
+        aConnection.getLocation();
+        aConnection.print();
 
-    Connection aConnection;
-    aConnection.getLocation();
-    aConnection.print();
-
-    aConnection.sendMessgaeToContact("to email");
-    aConnection.sendMessageToDriver("to email");
+        aConnection.sendMessgaeToContact("acraun@fau.edu", "Aubrey", "Craun");
+        aConnection.sendMessageToDriver("acraun@fau.edu", "Laura", "Craun");
+    }
+    catch(BaseException& e){
+        e.print();
+    }
 }

@@ -20,6 +20,7 @@ public:
     Car();
     Car(string model, string make, string color);
     ~Car();
+    void newCar();
     int lockCar();
     int unlockCar();
     void setModel(string model);

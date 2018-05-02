@@ -106,8 +106,9 @@ int Driver::calculateage(int day, int month, int year) throw(AgeException)
     cout << "Age: " << age << endl;
 
     if(age < 21) {
+        cout << "You are underage.";
 
-        throw AgeException();
+//        throw AgeException();
     }
 
     return age;
@@ -146,7 +147,7 @@ void Driver::dSave(string fileName)
     out.close();
 }
 
-void Driver::dLoad(string fileName)
+bool Driver::dLoad(string fileName)
 {
     ifstream in("driver.txt");
 
@@ -168,11 +169,12 @@ void Driver::dLoad(string fileName)
         in >> string;
         cout << "Uber ID: " << string << endl;
         cout << endl;
+        return true;
 
     }
-
     else {
         cout << "File could not be found";
+        return false;
     }
 
     in.close();
@@ -188,6 +190,9 @@ void Driver::dtest()
 
     dDriver.calculateage(day1, month1, year1);
     dDriver.getUberId();
+
+
+
     cout<<"\n\n";
     dDriver.printD();
     cout << "Saving..." << endl;

@@ -14,10 +14,11 @@
 #include <iomanip>
 #include <ctime>
 
-#define NORTH_BOUNDS 26.374765
-#define SOUTH_BOUNDS 26.365576
-#define EAST_BOUNDS -80.097378
-#define WEST_BOUNDS -80.107377
+
+#define NORTH_BOUNDS 26.423304
+#define WEST_BOUNDS -80.204537
+#define SOUTH_BOUNDS 26.322953
+#define EAST_BOUNDS -80.082475
 
 using namespace std;
 
@@ -27,10 +28,15 @@ public:
     virtual ~GPS();
     void getCoordinates();
     double getRandom(double lower, double upper);
+
+    /* Getters */
     double getLattitude();
-    void setLattitude(double lattitude);
     double getLongitude();
+
+    /* Setters */
+    void setLattitude(double lattitude);
     void setLongitude(double longitude);
+
     void print();
     static void test();
 private:

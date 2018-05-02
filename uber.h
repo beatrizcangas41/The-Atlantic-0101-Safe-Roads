@@ -1,7 +1,7 @@
 #ifndef UBER_H
 #define UBER_H
-#include <bankaccount.h>
-#include <debit.h>
+#include "bankaccount.h"
+#include "debit.h"
 #include <iostream>
 using namespace std;
 class Uber
@@ -22,7 +22,7 @@ private:
     //int location;
     string email;
     string password;
-    double amount;
+//    double amount;
     int choice;
     BankAccount* Danny;
     Debit* DannysCard;

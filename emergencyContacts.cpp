@@ -90,6 +90,8 @@ void EmergencyContacts::eLoad(string fileName)
 				cout << "Phone Number: " << pContacts[i]->getPhoneNumber() << endl;
 		}
         else{
+            cout << " Could not open file to write " << endl;
+
             break;
         }
         }
@@ -101,6 +103,7 @@ void EmergencyContacts::eLoad(string fileName)
 	}
 		
 	in.close();
+	cout << "Loading completed" << endl;
 }
 void  EmergencyContacts::eprint()
 {

@@ -52,6 +52,16 @@ Car::~Car(){
 
 }
 
+void Car::newCar(){
+    cout<<"Enter a car make:   ";
+    cin>>make;
+    cout<<"\nEnter the model:    ";
+    cin>>model;
+    cout<<"\nEnter the color:    ";
+    cin>>color;
+    save();
+}
+
 int Car::lockCar(){
     int status = aLock.lock();
     if (status)

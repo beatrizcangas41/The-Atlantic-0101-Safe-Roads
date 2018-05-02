@@ -4,40 +4,42 @@
  *  Created on: Apr 23, 2018
  *      Author: acraun
  */
+#ifndef CONNECTION_H_
+#define CONNECTION_H_
+
 #include <iostream>
 #include <string>
-#include "includes/rapidjson/document.h"
-#include "includes/rapidjson/writer.h"
-#include "includes/rapidjson/stringbuffer.h"
-#include "includes/curl/curl.h"
+#include "libraries/rapidjson/document.h"
+#include "libraries/rapidjson/writer.h"
+#include "libraries/rapidjson/stringbuffer.h"
+#include "libraries/twitcurl/include/curl/curl.h"
 #include "location.h"
+#include "exceptions.h"
 
 #define SENDGRID_URL "https://api.sendgrid.com/v3/mail/send"
-#define SENDGRID_KEY "Ask for key."
-#define GOOGLE_API_KEY "Ask for key."
-
+#define STATICMAPS_URL "https://maps.googleapis.com/maps/api/staticmap?center="
 
 using namespace rapidjson;
 using namespace std;
-
-#ifndef CONNECTION_H_
-#define CONNECTION_H_
 
 class Connection {
 public:
     Connection();
     virtual ~Connection();
-    Location* getLocation();
     static char* generateEmailJSONString(string email, string message);
-    void sendMessgaeToContact(string email);
-    void sendMessageToDriver(string email);
+    void sendMessgaeToContact(string email, string fName, string lName);
+    void sendMessageToDriver(string email, string fName, string lName);
+    virtual Location* getLocation();
     virtual string generateGoogleMap(bool exact);
+    virtual string loadApiKey(string fileName) throw(LoadingKeyException);
     static void test();
-    void print();
+    virtual void print();
 private:
     void sendEmail(char* data);
+    string staticMapsKey;
+    string sendgridKey;
     Document* json;
-    Location* location;
+    Location* pLocation;
     char* data;
 };
 

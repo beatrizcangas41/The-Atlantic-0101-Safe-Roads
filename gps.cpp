@@ -45,14 +45,12 @@ void GPS::setLongitude(double longitude) {
 }
 
 void GPS::print() {
-//    cout << setprecision(10);
+    cout << setprecision(10);
     cout << "Lat:  " << lattitude << endl;
     cout << "Long: " << longitude << endl;
 }
 
 void GPS::test() {
-    srand(time(NULL));
-
     GPS aGPS;
     aGPS.getCoordinates();
     aGPS.print();
