@@ -7,6 +7,15 @@ Driver::Driver()
     monthB = 0;
     yearB = 0;
     uberId = "";
+    pContact = 0;
+}
+
+void Driver::addContact(string fName, string lName, string number, string email)
+{
+        pContact = new Contacts(fName);
+        pContact->setLastName(lName);
+        pContact->setPhoneNumber(number);
+        pContact->setEmailAddress(email);
 }
 
 int Driver::getDay()
@@ -44,9 +53,8 @@ int Driver::getYear()
     do {
         cout << "\n\n Please enter current year:";
         cin >> year;
-        if(year<2018)
-        {
-            cout<<"INVALID! Year has to at at least be 2018"<<endl;
+        if(year < 2018) {
+            cout << "INVALID! Year has to at at least be 2018" << endl;
         }
 
     } while(year < 2018);
@@ -106,9 +114,8 @@ int Driver::calculateage(int day, int month, int year) throw(AgeException)
     cout << "Age: " << age << endl;
 
     if(age < 21) {
-        cout << "You are underage.";
 
-//        throw AgeException();
+        throw AgeException();
     }
 
     return age;
@@ -124,8 +131,11 @@ string Driver::getUberId()
 
 void Driver::printD()
 {
+    cout << "Name:" << pContact->getFirstName() << " " << pContact->getLastName() << endl;
     cout << "Date of birth: " << monthB << "/" << dayB << "/" << yearB << endl;
     cout << "Age:" << age << endl;
+    cout << "Phone Number:" << pContact->getPhoneNumber() << endl;
+    cout << "Email Address:" << pContact->getEmailAddress() << endl;
     cout << "Uber ID:" << uberId;
 }
 
@@ -133,11 +143,15 @@ void Driver::dSave(string fileName)
 {
     ofstream out("driver.txt");
     if(out.is_open()) {
-        out << monthB << endl;
-        out << dayB << endl;
-        out << yearB << endl;
+        // out << monthB << endl;
+        // out << dayB << endl;
+        // out << yearB << endl;
         out << age << endl;
-        out << uberId << endl;
+        out << pContact->getFirstName() << endl;
+        out << pContact->getLastName() << endl;
+        // out << uberId << endl;
+        out << pContact->getEmailAddress() << endl;
+        out << pContact->getPhoneNumber() << endl;
     }
 
     else {
@@ -147,34 +161,44 @@ void Driver::dSave(string fileName)
     out.close();
 }
 
-bool Driver::dLoad(string fileName)
+void Driver::dLoad(string fileName)
 {
     ifstream in("driver.txt");
 
     if(in.is_open()) {
+        /*
         int dayB;
         int monthB;
         int yearB;
+         */
         int age;
-        char string[100];
-
+        char s1[100];
+        char s2[200];
+        char s3[100];
+        char s4[100];
+        /*
         in >> dayB;
         in >> monthB;
         in >> yearB;
+
         cout << "Date of birth: " << dayB << "/" << monthB << "/" << yearB << endl;
+        */
 
         in >> age;
         cout << "Age: " << age << endl;
-
-        in >> string;
-        cout << "Uber ID: " << string << endl;
+        in >> s1;
+        in >> s2;
+        cout << "name: " << s1 << " " << s2 << endl;
+        in >> s3;
+        cout << "Email Address: " << s3 << endl;
+        in >> s4;
+        cout << "Phone NUmber: " << s4 << endl;
         cout << endl;
-        return true;
-
+        
     }
+
     else {
         cout << "File could not be found";
-        return false;
     }
 
     in.close();
@@ -189,15 +213,46 @@ void Driver::dtest()
     Driver dDriver;
 
     dDriver.calculateage(day1, month1, year1);
-    dDriver.getUberId();
-
-
-
-    cout<<"\n\n";
+    dDriver.addContact("Sam","Avrahami","5618345666","sdfsdf@gmail.com");
+    // dDriver.getUberId();
+    cout << "\n\n";
     dDriver.printD();
+    cout << endl;
     cout << "Saving..." << endl;
+    
     dDriver.dSave("driver.txt");
-
     cout << "Testing Loading Function: " << endl;
     dDriver.dLoad("driver.txt");
+}
+
+void Driver::dProcess()
+{
+    Driver dProcess;
+    string first;
+    string last;
+    string phone;
+    string email; 
+    
+    cout << "Please enter first name: ";
+    cin >> first;
+    cout << "\nPlease enter last name: ";
+    cin >> last;
+    cout << "\nPlease enter phone name: ";
+    cin >> phone;
+    cout << "\nPlease enter email name: ";
+    cin >> email;
+    dProcess.addContact(first,last,phone,email);
+    cout << endl;
+    
+    int d = 0, m = 0, y = 0;
+    dProcess.calculateage(d, m, y);
+    
+    dProcess.getUberId();
+    
+    dProcess.printD();
+    
+    cout << endl;
+    cout << "Load and Save: " << endl;
+    dProcess.dSave("driver.txt");
+    dProcess.dLoad("driver.txt");
 }

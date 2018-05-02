@@ -14,18 +14,19 @@ class Contacts
 public:
 
     Contacts();
-    Contacts(string name);
-    ~Contacts();   // COME BACK LATER
+    Contacts(string firstName);
+    ~ Contacts();   // COME BACK LATER
     
-    virtual string getName();
-    virtual void setName(string name);
+    string getFirstName();
+    string getLastName();
+    void setFirstName(string firstName);
+    void setLastName(string lastName);
     
-    virtual string getPhoneNumber();
-    virtual void setPhoneNumber(string phoneNumber);
+    string getPhoneNumber();
+    void setPhoneNumber(string phoneNumber);
     
-    virtual string getEmailAddress();
-    virtual void setEmailAddress(string emailAddress);
-
+    string getEmailAddress();
+    void setEmailAddress(string emailAddress);
     void save(ofstream* out);
     static Contacts* load(ifstream* in);
    // void save();
@@ -35,7 +36,8 @@ public:
  
 private:
      string phoneNumber;
-     string name;
+     string firstName;
+     string lastName;
      string emailAddress;
 };
 

@@ -16,10 +16,11 @@ public:
     ~EmergencyContacts();
     
     void eContacts();
-    void addContact(string name, string number, string email) throw (MaxException);
+    void addContact(string fName, string lName, string number, string email) throw (MaxException);
     void deleteContact();
     void eSave(string fileName);    
-    void eLoad(string fileName);    
+    void eLoad(string fileName);   
+    EmergencyContacts* eLoad(ifstream* in);
     static void etest();
     void eprint();
     static void eProcess();

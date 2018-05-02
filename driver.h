@@ -5,11 +5,11 @@
 #include "contactsException.h"
 class Driver:public Contacts
 {
-    
-    
+    Driver();
     
 public:
-    Driver();
+    void addContact(string fName, string lName, string number, string email);
+    
     int getDay();
     int getMonth();
     int getYear();
@@ -17,13 +17,12 @@ public:
     
     string getUberId();// still need to do load and save
     
-
-
     void dSave(string fileName);   
-    bool dLoad(string fileName);
+    static void dLoad(string fileName);  
     
     void printD();
     static void dtest();
+    static void dProcess();
     
 private:
     int age;
@@ -31,6 +30,7 @@ private:
     int monthB;
     int yearB;
     string uberId;
+    Contacts* pContact;
   
     
 };
