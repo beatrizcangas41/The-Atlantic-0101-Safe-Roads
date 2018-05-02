@@ -161,9 +161,9 @@ void Driver::dSave(string fileName)
     out.close();
 }
 
-void Driver::dLoad(string fileName)
+bool Driver::dLoad(string fileName)
 {
-    ifstream in("driver.txt");
+    ifstream in(fileName);
 
     if(in.is_open()) {
         /*
@@ -199,11 +199,12 @@ void Driver::dLoad(string fileName)
         phoneNumber = s4;
 //        cout << "Phone NUmber: " << s4 << endl;
         cout << endl;
-        
+        return 1;
     }
 
     else {
         cout << "File could not be found";
+        return 0;
     }
 
     in.close();

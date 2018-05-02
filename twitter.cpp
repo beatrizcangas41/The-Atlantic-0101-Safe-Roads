@@ -43,12 +43,18 @@ void Twitter::verifyCredentials() {
 }
 
 void Twitter::sendTweet() {
+    system_clock::time_point today;
+    time_t tt;
+
+    today = system_clock::now();
+    tt = system_clock::to_time_t (today);
+
     char tweetString[280];
     string tweetText;
     string response;
     GeoLocate* data = pLocation->getGeoLocate();
 
-    tweetText = "**SAFEROADS ADVISORY**\nPlease exercise caution while driving in ";
+    tweetText = "** SAFEROADS ADVISORY " + to_string(tt) + " **\nPlease exercise caution while driving in ";
     tweetText += data->getCity() + ", " + data->getState() + ".\n";
     strcpy(tweetString, tweetText.c_str());
 

@@ -19,7 +19,7 @@ public:
     string getUberId();// still need to do load and save
     
     void dSave(string fileName);   
-    void dLoad(string fileName);
+    bool dLoad(string fileName);
     
     void printD();
     static void dtest();

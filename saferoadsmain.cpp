@@ -26,24 +26,24 @@ using namespace std;
 
 void process() {
     try {
-//        Driver::dProcess();
-
-
-//        Driver::dtest();
         Driver aDriver;
-//        EmergencyContacts contacts;
-//
-        aDriver.dLoad("driver.txt");
-        aDriver.print();
+        EmergencyContacts aContacts;
 
-//        cout << "Driver return: " << drivLoad << endl;
+        bool driverLoad = aDriver.dLoad("driver.txt");
+        if(!driverLoad) {
+            Driver::dtest();
+        }
 
-//        if(!drivLoad) {
-//           Driver::dtest();
+//        bool contactsLoad = aContacts.eLoad("emergencyContacts.txt");
+//        cout << contactsLoad;
+//        if(!contactsLoad) {
+//            EmergencyContacts::eProcess();
 //        }
 
-//        contacts.eLoad("emergencyContacts.txt");
-//        contacts.eprint();
+//                contacts.eLoad("emergencyContacts.txt");
+//        Contacts* contacts = aContacts.getContact(1);
+//        cout << contacts->getFirstName();
+//        aContacts.eprint();
 
 //        bool contactLoad = contacts.eLoad("emergencyContacts.txt");
 //        cout << "Contact load: " << contactLoad << endl;
@@ -64,6 +64,7 @@ void process() {
         if(!aCar.load()){
             aCar.newCar();
         }
+
         double avg =aSensor.calculateAverage();
         cout << avg << endl;
         if(avg<LEGAL_LIMIT) {
@@ -75,39 +76,38 @@ void process() {
 //            GPS aGPS;
 //            aGPS.getCoordinates();
 
-            Location aLocation;
-            aLocation.load("location.txt");
+//            Location aLocation;
+//            aLocation.load("location.txt");
 
-            aLocation.setLocation();
-        //    aLocation.setLocation(26.268,-80.1021);
-            aLocation.getGeoData();
+//            aLocation.setLocation();
+//            aLocation.setLocation(26.268,-80.1021);
+//            aLocation.getGeoData();
 //            aLocation.print();
 
 //            aLocation.save("location.txt");
 
             Connection aConnection;
             aConnection.getLocation();
-//            aConnection.print();
+            aConnection.print();
 
-//            for(int i=0; i < 3; i++) {
-//                aConnection.sendMessgaeToContact("acraun@fau.edu", "Aubrey", "Craun");
-//            }
+            for(int i=0; i < 3; i++) {
+                aConnection.sendMessgaeToContact("acraun@fau.edu", "Aubrey", "Craun");
+            }
 
-//            Twitter aTwitter;
-//            aTwitter.getLocation();
-//            aTwitter.sendTweet();
+            Twitter aTwitter;
+            aTwitter.getLocation();
+            aTwitter.sendTweet();
 
             /* Timer goes here */
             cout << endl << endl << "Activating the battery.  Counting down 10 hours before sending driver the vehicle's location" << endl << endl;
             aSensor.activateBattery();
-//
+////
             string firstName;
             string lastName;
             string email;
             email = aDriver.getEmailAddress();
             firstName = aDriver.getFirstName();
             lastName = aDriver.getLastName();
-
 
             aConnection.sendMessageToDriver(email, firstName, lastName);
             aSensor.deactivateBattery();

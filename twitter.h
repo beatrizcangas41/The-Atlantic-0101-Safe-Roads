@@ -8,8 +8,12 @@
 #ifndef TWITTER_H_
 #define TWITTER_H_
 
+#include <chrono>
 #include "libraries/twitcurl/twitcurl.h"
 #include "connection.h"
+
+using std::chrono::system_clock;
+
 
 class Twitter: public Connection {
 public:
@@ -17,6 +21,7 @@ public:
     virtual ~Twitter();
     void verifyCredentials();
     string generateMessage();
+
     void sendTweet();
     void print();
     static void test();
