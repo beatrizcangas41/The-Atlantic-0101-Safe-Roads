@@ -45,7 +45,7 @@ void Uber::loadFile(string fileName)
     
 
  ifstream in(fileName);
-    if(in.is_open()) {
+    if(in.is_open()) { // it should load up the uberAccount.txt basically
         
              Uber::load(&in);
         }
