@@ -2,82 +2,133 @@
 
 Uber::Uber()
 {
-    Danny = new BankAccount;
-    DannysCard = new Debit;
+    pBankAccount = new BankAccount;
+    pDebitCard = new Debit;
+    string email;
+    string password;
+    string firstName;
+    string lastName;
+    string phoneNumber;
+    int choice = 0;
 }
 
 Uber::~Uber()
 {
-    if(Danny)
-        delete Danny;
-    Danny = 0;
-    if(DannysCard)
-        delete DannysCard;
-    DannysCard = 0;
+    if(pBankAccount)
+        delete pBankAccount;
+    pBankAccount = 0;
+
+    if(pDebitCard)
+        delete pDebitCard;
+    pDebitCard = 0;
 }
 
-int Uber::options()
+void Uber::saveFile(string fileName)
 {
-    int decision;
-    cout << "enter a choice " << endl;
+    ofstream out("uberAccount.txt");
+    if(out.is_open()) {
 
-    cout << "1, enter Bank Account info " << endl;
-    cout << "2, enter debit card info" << endl;
-    cout << " 3, get uber" << endl;
-
-    cin >> decision;
-    return decision;
-}
-void Uber::transaction(int choice)
-{
-    switch(choice) {
-    case 1: {
-        Danny->linkAccount();
-        Danny->print();
-        break;
+        out << email << endl;
+        out << firstName << endl;
+        out << lastName << endl;
+        out << phoneNumber << endl;
+        out.close();
+    } else {
+        cout << "Could not open file to write" << endl;
     }
-    case 2: {
-        DannysCard->enterCreditCard();
-    } break;
-    case 3: {
-        // requestRide(Location* location, int uberID);
+    // out<<'\0';
+    out.close();
+}
+
+void Uber::loadFile(string fileName)
+{
+    
+
+ ifstream in(fileName);
+    if(in.is_open()) {
+        
+             Uber::load(&in);
+        }
+        return 1;
+    else {
+        cout << "Could not open file to read" << endl;
+        return 0;
     }
+    in.close();
     }
-}
-
-void Uber::account()
+    /// example
+/*bool EmergencyContacts::eLoad(string fileName)
 {
-    do {
-        cout << "create for an uber account " << endl;
-        cout << "enter email:";
-        cin >> email;
-        //
-        cout << endl;
-        cout << "enter password:";
-        cin >> password;
-        cout << endl;
-        cout << "is this correct? 1 for yes, 2 for no" << endl;
+    ifstream in(fileName);
+    if(in.is_open()) {
+        for(int i = 0; i < 3; i++) {
+            pContacts[i] = Contacts::load(&in);
+        }
+        return 1;
+    } else {
+        cout << "Could not open file to read" << endl;
+        return 0;
+    }
+    in.close();
+    /// example
+     * */
 
-        int choice;
-        cin >> choice;
-    } while(choice == 2);
-}
+    void Uber::createAccount(string email, string firstName, string lastName, string phoneNumber)
+    {
+        this->email = email;
+        this->firstName = firstName;
+        this->lastName = lastName;
+        this->phoneNumber = phoneNumber;
+        saveFile("uberAccount.txt");
+    }
+    int Uber::options()
+    {
+        int decision;
+        cout << "enter a choice " << endl;
 
-void Uber::print()
-{
-}
-void Uber::process()
-{
-    account();
-    choice = options();
-    transaction(choice);
-}
-void Uber::test()
-{
-    int choice;
+        cout << "1, enter Bank Account info " << endl;
+        cout << "2, enter debit card info " << endl;
+        //  cout << " << endl;
 
-    Uber me;
-    me.account();
-    choice = me.options();
-    me.transaction(choice);
-}
+        cin >> decision;
+        return decision;
+    }
+    /*void Uber::transaction(int choice)
+    {
+        switch(choice) {
+        case 1: {
+            pBankAccount->linkAccount();
+            pBankAccount->print();
+            break;
+        }
+        case 2: {
+            pDebitCard->enterCreditCard();
+        } break;
+        case 3: {
+            // requestRide(Location* location, int uberID);
+        }
+        }
+    }*/
+    void Uber::print()
+    {
+    }
+    void Uber::process()
+    {
+
+        // check if a uber account exist. if not, createAccount();
+        //  createAccount(email, firstName, lastName, phoneNumber);
+        // it should save the account
+        // choice = options();           // then should check if a bank account or debit card exist.
+        // transaction(choice);          // if not, then choose either debit card or bankAccount.
+        // then save the file.
+        // then call uber with current location, and then direction address.
+    }
+    void Uber::test()
+    {
+
+        Uber me;
+        //loadFile("uberAcco")
+        // me.account();
+        // choice = me.options();
+        // me.transaction(choice);
+    }
