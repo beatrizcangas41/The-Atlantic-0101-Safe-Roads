@@ -1,32 +1,40 @@
 #ifndef UBER_H
 #define UBER_H
-#include "bankaccount.h"
-#include "debit.h"
+#include <bankaccount.h>
+#include <debit.h>
 #include <iostream>
+#include <fstream>
 using namespace std;
 class Uber
 {
 public:
     Uber();
     ~Uber();
-    
-    void account(); // creates a account by using a phonenumber
+
+    void createAccount(string email,
+        string firstName,
+        string lastName,
+        string phoneNumber); // creates a account by using a phonenumber
     int options();
     void transaction(int choice);
-    //int requestRide(Location* location, int uberID);
+    // int requestRide(Location* location, int uberID);
+    void saveFile(string fileName);
+    void loadFile(string fileName);
     void process();
     void print();
     static void test();
 
 private:
-    //int location;
+    // int location;
+
     string email;
     string password;
-//    double amount;
+    string firstName;
+    string lastName;
+    string phoneNumber;
     int choice;
-    BankAccount* Danny;
-    Debit* DannysCard;
-    
+    BankAccount* pBankAccount;
+    Debit* pDebitCard;
 };
 // aggregation relationship of bank account.
 #endif
