@@ -49,49 +49,85 @@ void EmergencyContacts::eSave(string fileName)
     out.close();
 }
 
-void EmergencyContacts::eLoad(string fileName)
+Contacts* EmergencyContacts::getContact(int index) {
+    return pContacts[index];
+}
+
+bool EmergencyContacts::eLoad(string fileName)
 {
-    ifstream in("emergencyContacts.txt");
+    ifstream in(fileName);
     if(in.is_open()) {
-        
-        char s1[100];
-        char s2[100];
-        char s3[100];
-        char s4[100];
-        
-        for(int i =0; i < size; i++) {
-            in >> s1;
-            in >> s2;
-            
-            if(size < MAX_CONTACTS_SIZE) {
-                //pContacts[i]->setFirstName(s1);
-                //pContacts[i]->getFirstName();
-                //pContacts[i]->setLastName(s2);
-                //pContacts[i]->getLastName();
-                //cout << "Name:" << pContacts[i]->getFirstName() << " " << pContacts[i]->getLastName() << endl;
-                cout << "Name:" << s1 << " " << s2 << endl;
-                
-                in >> s3;
-                //pContacts[i]->setEmailAddress(s4);
-                //pContacts[i]->getEmailAddress();
-                //in.getline(s3, 100);
-                cout << "Email: " << s3 << endl;
-                
-                in >> s4;
-                //pContacts[i]->setPhoneNumber(s4);
-                //pContacts[i]->getPhoneNumber();
-                //in.getline(s4, 100);
-                cout << "Phone Number: " << s4 << endl;
-                
-                //addContact(s1, s2, s3, s4);
-                cout << endl;
-                
-            } else {
-                cout << "Could not open file to read" << endl;
-            }
+        for(int i=0;i<3;i++){
+            pContacts[i] = Contacts::load(&in);
         }
+        return 1;
+    }else{
+        cout<<"Could not open file to read"<<endl;
+        return 0;
     }
     in.close();
+
+        //        cout << "open" << endl;
+//        char s1[100];
+//        char s2[100];
+//        char s3[100];
+//        char s4[100];
+//        for(int i =0; i < 3; i++) {
+//            while(!in.eof()) {
+//                in >> s1;
+//                string tmp(s1);
+//                cout << tmp << endl;
+//                pContacts[i]->setFirstName(tmp);
+//                Student* s = Student::load(&in);
+//                if(!tmp.empty()) {
+//                    cout << "not empty" << endl;
+//                    Link* l = new Link(s, pl, 0);
+//                    if(!pl) students = new LinkedList(l);
+//                    else students->add(l);
+//                    pl = l;
+//                } else {
+//                    cout << "empty" << endl;
+//                }
+//            }
+//            cout << "loop";
+            
+//            if(size < MAX_CONTACTS_SIZE) {
+//                in >> s1;
+//                pContacts[i]->setFirstName(s1);
+//                cout << s1 << endl;
+//                cout << pContacts[i]->getFirstName() << endl;
+//                pContacts[i]->getFirstName();
+//                in >> s2;
+//                pContacts[i]->setLastName(s2);
+                //pContacts[i]->getLastName();
+//                cout << "Name:" << pContacts[i]->getFirstName() << " " << pContacts[i]->getLastName() << endl;
+//                cout << "Name:" << s1 << " " << s2 << endl;
+                
+//                in >> s3;
+//                pContacts[i]->setEmailAddress(s3);
+                //pContacts[i]->getEmailAddress();
+                //in.getline(s3, 100);
+//                cout << "Email: " << s3 << endl;
+                
+//                in >> s4;
+//                pContacts[i]->setPhoneNumber(s4);
+                //pContacts[i]->getPhoneNumber();
+                //in.getline(s4, 100);
+//                cout << "Phone Number: " << s4 << endl;
+                
+                //addContact(s1, s2, s3, s4);
+//                cout << endl;
+                
+//            } else {
+//            }
+//        }
+//        cout << "works";
+//        return 1;
+//    } else {
+//        cout << "Could not open file to read" << endl;
+//        return 0;
+//    }
+//    in.close();
 }
 
 void EmergencyContacts::eprint()
@@ -100,17 +136,17 @@ void EmergencyContacts::eprint()
         pContacts[i]->print();
     }
 }
-void EmergencyContacts::etest()
-{
-    EmergencyContacts eContacts;
-    eContacts.addContact("bob", "Jones", "eNum", "emailadres");
-    // eContacts.addContact("john", "eNum2", "emailaddress2");
-    eContacts.eprint();
-
-    eContacts.eSave("emergencyContacts.txt");
-    cout << "\nTesting Load" << endl;
-    eContacts.eLoad("emergencyContacts.txt");
-}
+//void EmergencyContacts::etest()
+//{
+//    EmergencyContacts eContacts;
+//    eContacts.addContact("bob", "Jones", "eNum", "emailadres");
+//    // eContacts.addContact("john", "eNum2", "emailaddress2");
+//    eContacts.eprint();
+//
+//    eContacts.eSave("emergencyContacts.txt");
+//    cout << "\nTesting Load" << endl;
+//    eContacts.eLoad("emergencyContacts.txt");
+//}
 
 void EmergencyContacts::eProcess()
 {
@@ -156,19 +192,32 @@ void EmergencyContacts::eProcess()
     } while(menuChoice != 4);
 }
 
-/*void  EmergencyContacts::etest()
+void  EmergencyContacts::etest()
 {
 
-    EmergencyContacts eContacts;
+    EmergencyContacts aContacts;
+    bool contactLoaded = aContacts.eLoad("emergencyContacts.txt");
+    cout << contactLoaded;
 
-    cout << "Contacts: " << endl << endl;
-
-     for (int i = 1; i <= MAX_CONTACTS_SIZE; i++)
-    {
-    cout << "Contact " << i << " the name is: " << pContacts[i] << endl;
-    pContacts[i]->eprint();
+    Contacts* arr[3];
+    for (int i = 0; i < 3; i++) {
+        arr[i] = aContacts.getContact(i);
     }
 
-    eContacts.eprint();*/
+    cout << arr[0]->getFirstName() << endl;
+    cout << arr[1]->getFirstName() << endl;
+    cout << arr[2]->getFirstName() << endl;
 
-//}
+
+//    cout << "Contacts: " << endl << endl;
+//
+//     for (int i = 1; i <= MAX_CONTACTS_SIZE; i++)
+//    {
+//    cout << "Contact " << i << " the name is: " << pContacts[i] << endl;
+//    pContacts[i]->eprint();
+//    }
+//
+//    eContacts.eprint();*/
+
+}
+

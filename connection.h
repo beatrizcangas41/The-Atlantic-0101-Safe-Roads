@@ -15,6 +15,8 @@
 #include "libraries/twitcurl/include/curl/curl.h"
 #include "location.h"
 #include "exceptions.h"
+#include "driver.h"
+#include "contacts.h"
 
 #define SENDGRID_URL "https://api.sendgrid.com/v3/mail/send"
 #define STATICMAPS_URL "https://maps.googleapis.com/maps/api/staticmap?center="
@@ -27,7 +29,7 @@ public:
     Connection();
     virtual ~Connection();
     static char* generateEmailJSONString(string email, string message);
-    void sendMessgaeToContact(string email, string fName, string lName);
+    void sendMessgaeToContact(Driver d, Contacts* ec);
     void sendMessageToDriver(string email, string fName, string lName);
     virtual Location* getLocation();
     virtual string generateGoogleMap(bool exact);

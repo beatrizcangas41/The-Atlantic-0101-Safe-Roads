@@ -119,22 +119,24 @@ char* Connection::generateEmailJSONString(string email, string message) {
     return str;
 }
 
-void Connection::sendMessgaeToContact(string email, string fName, string lName) {
+//void Connection::sendMessgaeToContact(string email, string fName, string lName) {
+void Connection::sendMessgaeToContact(Driver d, Contacts* ec){
+
     string message;
     GeoLocate* loc = pLocation->getGeoLocate();
 
-    message = "<p>Your friend, "+ fName + " " + lName + ", has activated SafeRoads and is in need of assistance.</p>";
-    message += "<p>"+ fName +" is at (or near) the address of:</p>";
+    message =  "<p>Dear " + ec->getFirstName() + ",</p>";
+    message += "<p>Your friend, "+ d.getFirstName() + " " + d.getLastName() + ", has activated SafeRoads and is in need of assistance.</p>";
+    message += "<p>"+ d.getFirstName() +" is at (or near) the address of:</p>";
     message += "<p>" + loc->getStreetNumber() + " " + loc->getStreet() + "<br>";
     message += loc->getCity() + ", " + loc->getState() + " " + loc->getZip() + "</p>";
 
-    message += "<p>If you would like to contact "+fName+", call (XXX) XXX-XXXX.</p>";
-    message += "<p>{{{{{Uber stuff goes here}}}}</p>";
+    message += "<p>If you would like to contact "+ d.getFirstName() +", call " + d.getPhoneNumber() + ".</p>";
 
     message += "<img src=\"";
     message += generateGoogleMap(true);
     message += "\">";
-    char* data = Connection::generateEmailJSONString(email, message);
+    char* data = Connection::generateEmailJSONString(d.getEmailAddress(), message);
     sendEmail(data);
 }
 
@@ -142,6 +144,7 @@ void Connection::sendMessageToDriver(string email, string fName, string lName) {
     string message;
     GeoLocate* loc = pLocation->getGeoLocate();
 
+    message = "<p>Dear "+fName+"</p>";
     message = "<p>We see you used our SafeRoads service in the past 10 hours.</p>";
     message += "<p>Your vehicle is at (or near) the address of:</p>";
     message += "<p>" + loc->getStreetNumber() + " " + loc->getStreet() + "<br>";
@@ -209,8 +212,8 @@ void Connection::test() {
         aConnection.getLocation();
         aConnection.print();
 
-        aConnection.sendMessgaeToContact("acraun@fau.edu", "Aubrey", "Craun");
-        aConnection.sendMessageToDriver("acraun@fau.edu", "Laura", "Craun");
+//        aConnection.sendMessgaeToContact();
+//        aConnection.sendMessageToDriver("acraun@fau.edu", "Laura", "Craun");
     }
     catch(BaseException& e){
         e.print();

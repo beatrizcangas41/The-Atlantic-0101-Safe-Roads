@@ -15,11 +15,11 @@ public:
 
     Contacts();
     Contacts(string firstName);
-    ~ Contacts();   // COME BACK LATER
+    virtual ~ Contacts();   // COME BACK LATER
     
     string getFirstName();
     string getLastName();
-    void setFirstName(string firstName);
+    virtual void setFirstName(string firstName);
     void setLastName(string lastName);
     
     string getPhoneNumber();

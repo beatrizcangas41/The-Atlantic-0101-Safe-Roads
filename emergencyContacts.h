@@ -18,8 +18,9 @@ public:
     void eContacts();
     void addContact(string fName, string lName, string number, string email) throw (MaxException);
     void deleteContact();
+    Contacts* getContact(int index);
     void eSave(string fileName);    
-    void eLoad(string fileName);   
+    bool eLoad(string fileName);
     EmergencyContacts* eLoad(ifstream* in);
     static void etest();
     void eprint();

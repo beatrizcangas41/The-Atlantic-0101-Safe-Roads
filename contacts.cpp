@@ -64,19 +64,22 @@ void Contacts::setEmailAddress(string emailAddress)
 
 }
 
-
+*/
 Contacts* Contacts::load(ifstream* in)
 {
-Contacts* aContacts = new Contacts();
-char cont [MAX_SIZE];
-(*in).getline(cont,MAX_SIZE);
-aContacts->setName(cont);
-(*in).getline(cont,MAX_SIZE);
-aContacts->setPhoneNumber(cont);
-(*in).getline(cont,MAX_SIZE);
-aContacts->setEmailAddress(cont);
-return aContacts;
-}*/
+    Contacts* aContacts = new Contacts();
+    char str[100];
+    (*in).getline(str,100);
+    aContacts->setFirstName(str);
+    (*in).getline(str,100);
+    aContacts->setLastName(str);
+    (*in).getline(str,100);
+    aContacts->setEmailAddress(str);
+    (*in).getline(str,100);
+    aContacts->setPhoneNumber(str);
+
+    return aContacts;
+}
 
 void Contacts::print()
 {
