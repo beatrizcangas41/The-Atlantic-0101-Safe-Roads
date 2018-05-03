@@ -2,7 +2,7 @@
  * connection.h
  *
  *  Created on: Apr 23, 2018
- *      Author: acraun
+ *      Author: Aubrey Craun
  */
 #ifndef CONNECTION_H_
 #define CONNECTION_H_

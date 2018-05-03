@@ -2,7 +2,7 @@
  * twitter.h
  *
  *  Created on: Apr 25, 2018
- *      Author: acraun
+ *      Author: Aubrey Craun
  */
 
 #ifndef TWITTER_H_

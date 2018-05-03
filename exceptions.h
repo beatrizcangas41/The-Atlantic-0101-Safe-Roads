@@ -2,7 +2,7 @@
  * exceptions.h
  *
  *  Created on: Apr 30, 2018
- *      Author: acraun
+ *      Author: Aubrey Craun
  */
 #ifndef EXCEPTIONS_H_
 #define EXCEPTIONS_H_

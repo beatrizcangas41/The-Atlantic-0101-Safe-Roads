@@ -2,7 +2,7 @@
  * gps.h
  *
  *  Created on: Apr 26, 2018
- *      Author: acraun
+ *      Author: Aubrey Craun
  */
 
 #ifndef GPS_H_

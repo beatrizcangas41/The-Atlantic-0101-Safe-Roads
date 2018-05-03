@@ -2,7 +2,7 @@
  * gps.cpp
  *
  *  Created on: Apr 26, 2018
- *      Author: acraun
+ *      Author: Aubrey Craun
  */
 
 #include "gps.h"

@@ -2,7 +2,7 @@
  * address.cpp
  *
  *  Created on: Apr 30, 2018
- *      Author: acraun
+ *      Author: Aubrey Craun
  */
 
 #include "geolocate.h"

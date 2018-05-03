@@ -2,7 +2,7 @@
  * address.h
  *
  *  Created on: Apr 30, 2018
- *      Author: acraun
+ *      Author: Aubrey Craun
  */
 
 #ifndef GEOLOCATE_H_

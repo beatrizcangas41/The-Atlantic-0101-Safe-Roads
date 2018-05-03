@@ -2,7 +2,7 @@
  * Location.h
  *
  *  Created on: Apr 25, 2018
- *      Author: acraun
+ *      Author: Aubrey Craun
  */
 
 #ifndef LOCATION_H_

@@ -2,7 +2,7 @@
  * connection.cpp
  *
  *  Created on: Apr 23, 2018
- *      Author: acraun
+ *      Author: Aubrey Craun
  */
 
 #include "connection.h"
