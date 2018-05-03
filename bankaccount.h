@@ -29,8 +29,8 @@ public:
     void setAccountNumber(string accountNumber);
     string getAccountNumber();
 
-    void saveFile(ofstream* out);
-    BankAccount* loadFile(ifstream* in);
+    void saveFile(string fileName);
+    bool loadFile(string fileName);
     void print();
     void static test();
 };

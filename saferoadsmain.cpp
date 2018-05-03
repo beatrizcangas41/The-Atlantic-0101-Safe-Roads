@@ -129,8 +129,8 @@ int main(void) {
 //    Connection::test();
 //    Twitter::test();
 //    EmergencyContacts::etest();
-//    Debit::test();
-    BankAccount::test();
+    Debit::test();
+//    BankAccount::test();
 //    Uber::test();
 
 //    process();

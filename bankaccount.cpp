@@ -61,24 +61,36 @@ string BankAccount::getAccountNumber() {
     return accountNumber;
 }
 
-void BankAccount::saveFile(ofstream* out)
+void BankAccount::saveFile(string fileName)
 {
-    *out << balance << endl;
-    *out << accountNumber << endl;
-    *out << routingNumber << endl;
+    ofstream out(fileName);
+    if(out.is_open()){
+        out << balance << endl;
+        out << accountNumber << endl;
+        out << routingNumber << endl;
+    } else {
+        cout<<"Could not open file to write"<<endl;
+    }
+    out.close();
 }
 
-BankAccount* BankAccount::loadFile(ifstream* in)
+bool BankAccount::loadFile(string fileName)
 {
-    BankAccount* aBankAccount = new BankAccount();
+    ifstream in(fileName);
     char str[100];
-    (*in).getline(str,100);
-    aBankAccount->setBalance(atof(str));
-    (*in).getline(str,100);
-    aBankAccount->setRoutingNumber(str);
-    (*in).getline(str,100);
-    aBankAccount->setAccountNumber(str);
-    return aBankAccount;
+    if(in.is_open()){
+        in.getline(str,100);
+        balance = atof(str);
+        in.getline(str,100);
+        routingNumber = str;
+        in.getline(str,100);
+        accountNumber = str;
+        return 1;
+    }else{
+        cout<<"Could not open file to read"<<endl;
+        return 0;
+    }
+    in.close();
 }
 
 void BankAccount::print()
@@ -90,25 +102,15 @@ void BankAccount::print()
 void BankAccount::test()
 {
     BankAccount aBankAccount;
-    cout<<"entering info..."<<endl;
-    aBankAccount.linkAccount();
 
-    cout<<"saving file..."<<endl<<endl;
-    ofstream out("uberAccount.txt");
-    if(out.is_open()){
-         aBankAccount.saveFile(&out);
-    }else{
-          cout<<"Could not open file to write"<<endl;
-    }
-    out.close();
+//    cout<<"entering info..."<<endl;
+//    aBankAccount.linkAccount();
+//
+//    cout<<"saving file..."<<endl<<endl;
+//    aBankAccount.saveFile("bankAccount.txt");
 
-    cout<<"loading file..."<<endl<<endl;
-    ifstream in("uberAccount.txt");
-    if(in.is_open()) {
-        BankAccount* pBankAccount = aBankAccount.loadFile(&in);
-        pBankAccount->print();
-    } else {
-        cout << "Could not open file to write" << endl;
-    }
-    in.close();
+    cout<<endl<<"loading file..."<<endl;
+    aBankAccount.loadFile("bankAccount.txt");
+
+    aBankAccount.print();
 }

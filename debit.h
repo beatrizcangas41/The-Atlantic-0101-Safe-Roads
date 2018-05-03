@@ -12,8 +12,8 @@ public:
     void print();
     static void test();
 
-    void saveFile(ofstream* off);
-    Debit* loadFile(ifstream* in);
+    void saveFile(string fileName);
+    bool loadFile(string fileName);
 
     void setDebitCardNumber(string debitCardNumber);
     string getDebitCardNumber();

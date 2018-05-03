@@ -2,14 +2,9 @@
 
 Uber::Uber()
 {
-    pBankAccount = new BankAccount;
-    pDebitCard = new Debit;
-    string email;
-    string password;
-    string firstName;
-    string lastName;
-    string phoneNumber;
-    int choice = 0;
+    pBankAccount = 0;
+    pDebitCard = 0;
+    choice = 0;
 }
 
 Uber::~Uber()
@@ -25,53 +20,39 @@ Uber::~Uber()
 
 void Uber::saveFile(string fileName)
 {
-    ofstream out("uberAccount.txt");
+    ofstream out(fileName);
     if(out.is_open()) {
-
         out << email << endl;
         out << firstName << endl;
         out << lastName << endl;
         out << phoneNumber << endl;
-        out.close();
     } else {
         cout << "Could not open file to write" << endl;
     }
-    // out<<'\0';
     out.close();
 }
 
-void Uber::loadFile(string fileName)
+bool Uber::loadFile(string fileName)
 {
-    
-
- ifstream in(fileName);
-    if(in.is_open()) { // it should load up the uberAccount.txt basically
-        
-             Uber::load(&in);
-        }
+    ifstream in(fileName);
+    char str[10];
+    if(in.is_open()) {
+        in.getline(str,100);
+        email = str;
+        in.getline(str,100);
+        firstName = str;
+        in.getline(str,100);
+        lastName = str;
+        in.getline(str,100);
+        phoneNumber = str;
         return 1;
+    }
     else {
         cout << "Could not open file to read" << endl;
         return 0;
     }
     in.close();
-    }
-    /// example
-/*bool EmergencyContacts::eLoad(string fileName)
-{
-    ifstream in(fileName);
-    if(in.is_open()) {
-        for(int i = 0; i < 3; i++) {
-            pContacts[i] = Contacts::load(&in);
-        }
-        return 1;
-    } else {
-        cout << "Could not open file to read" << endl;
-        return 0;
-    }
-    in.close();
-    /// example
-     * */
+}
 
     void Uber::createAccount(string email, string firstName, string lastName, string phoneNumber)
     {

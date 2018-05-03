@@ -79,53 +79,54 @@ void Debit::test()
 {
     Debit Card;
 
-    cout<<endl<<"entering info..."<<endl;
-    Card.enterCreditCard();
-
-    cout<<endl<<"saving file..."<<endl;
-    ofstream out("uberAccount.txt");
-    if(out.is_open()){
-         Card.saveFile(&out);
-    }else{
-          cout<<"Could not open file to write"<<endl;
-    }
-    out.close();
+//    cout<<endl<<"entering info..."<<endl;
+//    Card.enterCreditCard();
+//
+//    cout<<endl<<"saving file..."<<endl;
+//    Card.saveFile("debitAccount.txt");
 
     cout<<endl<<"loading file..."<<endl;
-    ifstream in("uberAccount.txt");
-    if(in.is_open()) {
-        Debit* pDebit = Card.loadFile(&in);
-        pDebit->print();
+    Card.loadFile("debitAccount.txt");
+
+    Card.print();
+}
+
+void Debit::saveFile(string fileName)
+{
+    ofstream out(fileName);
+    if(out.is_open()){
+        out << firstName << endl;
+        out << lastName << endl;
+        out << debitCardNumber << endl;
+        out << month << endl;
+        out << year << endl;
     } else {
-        cout << "Could not open file to write" << endl;
+        cout<<"Could not open file to write"<<endl;
+    }
+    out.close();
+}
+
+bool Debit::loadFile(string fileName)
+{
+    ifstream in(fileName);
+    char str[100];
+    if(in.is_open()){
+        in.getline(str,100);
+        firstName = str;
+        in.getline(str,100);
+        lastName = str;
+        in.getline(str,100);
+        debitCardNumber = str;
+        in.getline(str,100);
+        month = atoi(str);
+        in.getline(str,100);
+        year = atoi(str);
+        return 1;
+    }else{
+        cout<<"Could not open file to read"<<endl;
+        return 0;
     }
     in.close();
-}
-
-void Debit::saveFile(ofstream* out)
-{
-    *out << firstName << endl;
-    *out << lastName << endl;
-    *out << debitCardNumber << endl;
-    *out << month << endl;
-    *out << year << endl;
-}
-
-Debit* Debit::loadFile(ifstream* in)
-{
-    Debit* aDebit = new Debit();
-    char str[100];
-    (*in).getline(str,100);
-    aDebit->setFirstName(str);
-    (*in).getline(str,100);
-    aDebit->setLastName(str);
-    (*in).getline(str,100);
-    aDebit->setDebitCardNumber(str);
-    (*in).getline(str,100);
-    aDebit->setMonth(atoi(str));
-    (*in).getline(str,100);
-    aDebit->setYear(atoi(str));
-    return aDebit;
 }
 
 void Debit::enterCreditCard()
