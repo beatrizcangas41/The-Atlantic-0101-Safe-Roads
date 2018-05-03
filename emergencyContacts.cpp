@@ -62,7 +62,7 @@ bool EmergencyContacts::eLoad(string fileName)
         }
         return 1;
     }else{
-        cout<<"Could not open file to read"<<endl;
+//        cout<<"Could not open file to read"<<endl;
         return 0;
     }
     in.close();
@@ -155,35 +155,35 @@ void EmergencyContacts::eProcess()
     int menuChoice = 0;
 
     do {
-        cout << "1. Add Emergency Contact" << endl;
+        cout << "\n1. Add Emergency Contact" << endl;
         cout << "2. Save  " << endl;
         cout << "3. Load " << endl;
-        cout << "4. Quit " << endl;
-        cout << "Enter a Choice:";
+        cout << "4. Quit " << endl << endl;
+        cout << "Enter a Choice: ";
         cin >> menuChoice;
         if(menuChoice == 1) {
             string eName1;
-            cout << "First Name: " << endl;
+            cout << "\nFirst Name: ";
             cin >> eName1;
             string eName2;
-            cout << "Last Name: " << endl;
+            cout << "Last Name: ";
             cin >> eName2;
             string eNum;
-            cout << " Phone number:";
+            cout << "Phone number: ";
             cin >> eNum;
-            cout << "Email Address:";
+            cout << "Email Address: ";
             string eAddress;
             cin >> eAddress;
             eContacts.addContact(eName1, eName2, eNum, eAddress);
             eContacts.eprint();
 
         } else if(menuChoice == 2) {
-            cout << "Saved" << endl;
+            cout << "Your contacts have been saved." << endl;
             eContacts.eSave("emergencyContacts.txt");
 
         } else if(menuChoice == 3) {
             eContacts.eLoad("emergencyContacts.txt");
-            eContacts.print();
+            eContacts.eprint();
             
         } else if(menuChoice == 4) {
             cout << "Goodbye!";

@@ -34,7 +34,7 @@ string Connection::loadApiKey(string fileName) throw(LoadingKeyException) {
 
 Location* Connection::getLocation() {
     pLocation = new Location();
-    pLocation->setLocation();
+    pLocation->load("location.txt");
     pLocation->getGeoData();
     return pLocation;
 }
@@ -95,7 +95,7 @@ char* Connection::generateEmailJSONString(string email, string message) {
     fromObj.AddMember("email", val, allocator);
     d.AddMember("from", fromObj, allocator);
 
-    string subject = "Hello World";
+    string subject = "Important message from SafeRoads";
     val.SetString(subject.c_str(), static_cast<SizeType>(subject.length()), allocator);
     d.AddMember("subject", val, allocator);
 
@@ -125,18 +125,23 @@ void Connection::sendMessgaeToContact(Driver d, Contacts* ec){
     string message;
     GeoLocate* loc = pLocation->getGeoLocate();
 
+    Car aCar;
+    aCar.load();
+
     message =  "<p>Dear " + ec->getFirstName() + ",</p>";
     message += "<p>Your friend, "+ d.getFirstName() + " " + d.getLastName() + ", has activated SafeRoads and is in need of assistance.</p>";
     message += "<p>"+ d.getFirstName() +" is at (or near) the address of:</p>";
     message += "<p>" + loc->getStreetNumber() + " " + loc->getStreet() + "<br>";
     message += loc->getCity() + ", " + loc->getState() + " " + loc->getZip() + "</p>";
 
+    message += "<p>Be on the lookout for a " + aCar.getColor() + " " + aCar.getMake() + " " + aCar.getModel() + ".";
+
     message += "<p>If you would like to contact "+ d.getFirstName() +", call " + d.getPhoneNumber() + ".</p>";
 
     message += "<img src=\"";
     message += generateGoogleMap(true);
     message += "\">";
-    char* data = Connection::generateEmailJSONString(d.getEmailAddress(), message);
+    char* data = Connection::generateEmailJSONString(ec->getEmailAddress(), message);
     sendEmail(data);
 }
 

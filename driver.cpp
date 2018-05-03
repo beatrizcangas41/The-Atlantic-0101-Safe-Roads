@@ -22,7 +22,7 @@ int Driver::getDay()
 {
     int day;
     do {
-        cout << "Please enter current day:";
+        cout << "Please enter current day: ";
         cin >> day;
 
         if(day > 31 || day <= 0) {
@@ -37,7 +37,7 @@ int Driver::getMonth()
 {
     int month;
     do {
-        cout << "\n Please enter current month:";
+        cout << "Please enter current month: ";
         cin >> month;
 
         if(month > 12 || month <= 0) {
@@ -51,7 +51,7 @@ int Driver::getYear()
 {
     int year;
     do {
-        cout << "\n\n Please enter current year:";
+        cout << "Please enter current year: ";
         cin >> year;
         if(year < 2018) {
             cout << "INVALID! Year has to at at least be 2018" << endl;
@@ -68,10 +68,10 @@ int Driver::calculateage(int day, int month, int year) throw(AgeException)
     month = getMonth();
     year = getYear();
 
-    cout << "\n\n Current Date:" << month << "/" << day << "/" << year;
+    cout << "\nCurrent Date:" << month << "/" << day << "/" << year;
 
     do {
-        cout << "\n\n Please enter YOUR year of birth:";
+        cout << "\n\nPlease enter YOUR year of birth: ";
         cin >> yearB;
         if(yearB > year) {
             cout << "INVALID! Your year of birth cannot be greater than current year" << endl;
@@ -82,7 +82,7 @@ int Driver::calculateage(int day, int month, int year) throw(AgeException)
     } while(yearB > year);
 
     do {
-        cout << "\n\nPlease enter YOUR day of birth:";
+        cout << "Please enter YOUR day of birth: ";
         cin >> dayB;
         if(dayB > 31 || dayB <= 0) {
 
@@ -91,14 +91,14 @@ int Driver::calculateage(int day, int month, int year) throw(AgeException)
     } while(dayB > 31 || dayB <= 0);
 
     do {
-        cout << "\n Please enter Your month of birth:";
+        cout << "Please enter Your month of birth: ";
         cin >> monthB;
         if(monthB > 12 || monthB <= 0) {
             cout << "INVALID! Month needs to be between 1-12";
         }
     } while(monthB > 12 || monthB <= 0);
 
-    cout << "Date of Birth: " << monthB << "/" << dayB << "/" << yearB << endl;
+    cout << "\nDate of Birth: " << monthB << "/" << dayB << "/" << yearB << endl;
 
     if(monthB < month) {
         if(dayB < day) {
@@ -132,11 +132,11 @@ string Driver::getUberId()
 void Driver::printD()
 {
     cout << "Name:" << pContact->getFirstName() << " " << pContact->getLastName() << endl;
-    cout << "Date of birth: " << monthB << "/" << dayB << "/" << yearB << endl;
+//    cout << "Date of birth: " << monthB << "/" << dayB << "/" << yearB << endl;
     cout << "Age:" << age << endl;
     cout << "Phone Number:" << pContact->getPhoneNumber() << endl;
     cout << "Email Address:" << pContact->getEmailAddress() << endl;
-    cout << "Uber ID:" << uberId;
+//    cout << "Uber ID:" << uberId;
 }
 
 void Driver::dSave(string fileName)
@@ -203,7 +203,7 @@ bool Driver::dLoad(string fileName)
     }
 
     else {
-        cout << "File could not be found";
+//        cout << "File could not be found";
         return 0;
     }
 
@@ -242,11 +242,11 @@ void Driver::dProcess()
 
         cout << "Please enter first name: ";
         cin >> first;
-        cout << "\nPlease enter last name: ";
+        cout << "Please enter last name: ";
         cin >> last;
-        cout << "\nPlease enter phone number: ";
+        cout << "Please enter phone number: ";
         cin >> phone;
-        cout << "\nPlease enter email address: ";
+        cout << "Please enter email address: ";
         cin >> email;
         dProcess.addContact(first,last,phone,email);
         cout << endl;
@@ -254,14 +254,16 @@ void Driver::dProcess()
         int d = 0, m = 0, y = 0;
         dProcess.calculateage(d, m, y);
 
-        dProcess.getUberId();
+//        dProcess.getUberId();
+        dProcess.dSave("driver.txt");
 
+        cout << endl << "The following information has been saved to SafeRoads:" << endl << endl;
         dProcess.printD();
 
-        cout << endl;
-        cout << "Load and Save: " << endl;
-        dProcess.dSave("driver.txt");
-        dProcess.dLoad("driver.txt");
+//        cout << endl;
+//        cout << "Load and Save: " << endl;
+//        dProcess.dSave("driver.txt");
+//        dProcess.dLoad("driver.txt");
     }
     catch(VirtualException& e) {
         e.print1();

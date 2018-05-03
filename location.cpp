@@ -113,14 +113,14 @@ bool Location::compare() {
 }
 
 void Location::print() {
-    cout << setprecision(10);
-    cout << "Printing out 'aLocation' object..." << endl;
-    cout << "zoom:   " << zoom << endl;
+//    cout << setprecision(10);
+//    cout << "Printing out 'aLocation' object..." << endl;
+//    cout << "zoom:   " << zoom << endl;
     cout << "lat:    " << lattitude << endl;
     cout << "long:   " << longitude << endl;
 
-    cout << endl;
-    cout << "Printing 'pGeoLocate' object..." << endl;
+//    cout << endl;
+//    cout << "Printing 'pGeoLocate' object..." << endl;
     pGeoLocate->print();
 }
 
