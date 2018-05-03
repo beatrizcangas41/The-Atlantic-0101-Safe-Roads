@@ -3,6 +3,7 @@
 #include "bankaccount.h"
 #include "debit.h"
 #include "location.h"
+#include "geolocate.h"
 #include "driver.h"
 #include "contacts.h"
 #include <iostream>

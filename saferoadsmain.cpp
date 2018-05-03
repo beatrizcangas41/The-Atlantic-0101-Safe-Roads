@@ -119,7 +119,8 @@ void process() {
               cout << '\n' << "Press a key to continue...";
             } while (cin.get() != '\n');
 
-//
+
+
             int userSelection = 0;
             cout << "\nWhat would you like to do?" << endl;
             cout << "    1. Send contact a message" << endl;
@@ -127,10 +128,11 @@ void process() {
 //
             cout << "Enter your choice: ";
             cin >> userSelection;
-//
+
+            Connection aConnection;
+            aConnection.getLocation();
+
             if(userSelection == 1) {
-                Connection aConnection;
-                aConnection.getLocation();
 
                 Contacts* aContactsArr[3];
                 for(int i=0; i < 3; i++) {
@@ -147,44 +149,44 @@ void process() {
                 Twitter aTwitter;
                 aTwitter.getLocation();
                 aTwitter.sendTweet();
-                do
-                {
-                  cout << '\n' << "Press a key to continue...";
-                } while (cin.get() != '\n');
-
-
-                cout << "\n\n------------------------------------------------------------------" << endl;
-                cout << "A backup battery will activate which will activate timer for 10 " << endl;
-                cout << "hours.  After the timer ends another email is sent to the driver " << endl;
-                cout << "making them aware of the location of the vehicle. " << endl;
-                cout << "------------------------------------------------------------------" << endl;
-                do
-                {
-                  cout << '\n' << "Press a key to continue...";
-                } while (cin.get() != '\n');
-
-                cout << endl << "Activating the battery.  Counting down 10 hours before sending driver the vehicle's location" << endl << endl;
-                aSensor.activateBattery();
-
-                string firstName = aDriver.getFirstName();
-                string lastName = aDriver.getLastName();
-                string email = aDriver.getEmailAddress();
-
-                aConnection.sendMessageToDriver(email, firstName, lastName);
-
-                cout << "\n\n------------------------------------------------------------------" << endl;
-                cout << "Once driver safely returns to his car, the battery will deactivate. " << endl;
-                cout << "------------------------------------------------------------------" << endl;
-                do
-                {
-                  cout << '\n' << "Press a key to continue...";
-                } while (cin.get() != '\n');
-                aSensor.deactivateBattery();
-                if(!aSensor.getBatteryStatus()) {
-                    cout << "Battery deactivated." << endl;
-                }
             } else if(userSelection == 2) {
                 Uber::process(aDriver);
+            }
+
+            do
+            {
+//              cout << '\n' << "Press a key to continue...";
+            } while (cin.get() != '\n');
+
+            cout << "\n\n------------------------------------------------------------------" << endl;
+            cout << "A backup battery will activate which will activate timer for 10 " << endl;
+            cout << "hours.  After the timer ends another email is sent to the driver " << endl;
+            cout << "making them aware of the location of the vehicle. " << endl;
+            cout << "------------------------------------------------------------------" << endl;
+            do
+            {
+              cout << '\n' << "Press a key to continue...";
+            } while (cin.get() != '\n');
+
+            cout << endl << "Activating the battery.  Counting down 10 hours before sending driver the vehicle's location" << endl << endl;
+            aSensor.activateBattery();
+
+            string firstName = aDriver.getFirstName();
+            string lastName = aDriver.getLastName();
+            string email = aDriver.getEmailAddress();
+
+            aConnection.sendMessageToDriver(email, firstName, lastName);
+
+            cout << "\n\n------------------------------------------------------------------" << endl;
+            cout << "Once driver safely returns to his car, the battery will deactivate. " << endl;
+            cout << "------------------------------------------------------------------" << endl;
+            do
+            {
+              cout << '\n' << "Press a key to continue...";
+            } while (cin.get() != '\n');
+            aSensor.deactivateBattery();
+            if(!aSensor.getBatteryStatus()) {
+                cout << "Battery deactivated." << endl;
             }
         }
     }

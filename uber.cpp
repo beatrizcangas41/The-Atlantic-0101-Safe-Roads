@@ -36,7 +36,7 @@ void Uber::saveFile(string fileName)
 bool Uber::loadFile(string fileName)
 {
     ifstream in("uberAccount.txt");
-    char str[10];
+    char str[100];
     if(in.is_open()) {
         in.getline(str, 100);
         email = str;
@@ -63,7 +63,7 @@ void Uber::createAccount(string email, string firstName, string lastName, string
     this->firstName = firstName;
     this->lastName = lastName;
     this->phoneNumber = phoneNumber;
-    cout << "enter password to sign in to account" << endl;
+    cout << "create a new password to sign in:" << endl;
     cin >> password;
     this->password = password;
 
@@ -72,23 +72,33 @@ void Uber::createAccount(string email, string firstName, string lastName, string
 int Uber::options()
 {
     int decision;
-    cout << "enter a choice " << endl;
-
-    cout << "1, enter Bank Account info " << endl;
-    cout << "2, enter debit card info " << endl;
+    cout << "\nPayment Options:"<<endl;
+    cout << "    1. Enter Bank Account info " << endl;
+    cout << "    2. Enter debit card info " << endl;
     //  cout << " << endl;
+    cout << "Enter a choice of payment: " << endl;
 
     cin >> decision;
     return decision;
 }
 void Uber::requestRide(Location* location)
 {    string destination;
-    cout<< "your location is "<< &location<< endl;
-    cout << " where would you like to go?" << endl;
+    location->getGeoData();
+    GeoLocate* geo = location->getGeoLocate();
+
+    cout<< "Your location is at:"<< endl << endl;
+    location->print();
+
+    cout << endl<<"Where would you like to go?" << endl;
     cin >> destination;
-    cout<<"from "<<&location<<"to "<<destination<<endl;
-    cout << " your Uber will be on its way"
-    cout<< "the total amount will be 10 dollars."
+
+    cout<<"from: "<<endl;
+    cout<<geo->getStreetNumber()<<" "<<geo->getStreet()<<endl;
+    cout<<geo->getCity()<<" "<<geo->getState()<<" "<<geo->getZip()<<endl<<endl;
+    cout<<"to: "<<endl;
+    cout<<destination<<endl;
+    cout << "Your Uber will be on its way!"<<endl<<endl;
+    cout<< "The total amount will be 10 dollars.";
 }
 
 void Uber::print()
@@ -107,7 +117,7 @@ void Uber::process(Driver driver)
         string fName = driver.getFirstName();
         string lName = driver.getLastName();
         string phone = driver.getPhoneNumber();
-        cout << "creating account..." << endl;
+        cout << "creating Uber account..." << endl;
         aUber.createAccount(email, fName, lName, phone);
     }
 
@@ -118,12 +128,16 @@ void Uber::process(Driver driver)
         num1 = aUber.options();
         if(num1 == 1) {
             aBankAccount.linkAccount();
+            aBankAccount.saveFile("bankAccount.txt");
         } else if(num1 == 2) {
             aDebit.enterCreditCard();
+            aDebit.saveFile("debitAccount.txt");
         }
     }
+    Location* loc = new Location;
+    loc->load("location.txt");
 
-    aUber.requestRide(location);
+    aUber.requestRide(loc);
 
     //    if(num4 == 1) {
     //        Location* location;
