@@ -28,7 +28,7 @@ void Uber::saveFile(string fileName)
         out << phoneNumber << endl;
         out << password << endl;
     } else {
-//        cout << "Could not open file to write" << endl;
+        //        cout << "Could not open file to write" << endl;
     }
     out.close();
 }
@@ -50,7 +50,7 @@ bool Uber::loadFile(string fileName)
         password = str;
         return 1;
     } else {
-//        cout << "Could not open file to read" << endl;
+        //        cout << "Could not open file to read" << endl;
         return 0;
     }
     return 0;
@@ -65,6 +65,7 @@ void Uber::createAccount(string email, string firstName, string lastName, string
     this->phoneNumber = phoneNumber;
     cout << "enter password to sign in to account" << endl;
     cin >> password;
+    this->password = password;
 
     saveFile("uberAccount.txt");
 }
@@ -85,6 +86,8 @@ void Uber::requestRide(Location* location)
     string destination;
     cout << " where would you like to go?" << endl;
     cin >> destination;
+    cout << " your Uber will be on its way"
+    cout<< "the total amount will be 10 dollars."
 }
 
 void Uber::print()
@@ -92,7 +95,7 @@ void Uber::print()
 }
 void Uber::process(Driver driver)
 {
-//    int num1, num2, num3, num4;
+    int num1, num2, num3, num4;
     Uber aUber;
     BankAccount aBankAccount;
     Debit aDebit;
@@ -111,13 +114,20 @@ void Uber::process(Driver driver)
     bool debitCardLoad = aDebit.loadFile("debitAccount.txt");
 
     if(!bankAccountLoad && !debitCardLoad) {
-        aUber.options();
+        num1 = aUber.options();
+        if(num1 == 1) {
+            aBankAccount.linkAccount();
+        } else if(num1 == 2) {
+            aDebit.enterCreditCard();
+        }
     }
 
-//    if(num4 == 1) {
-//        Location* location;
-//        aUber.requestRide(location);
-//    }
+    aUber.requestRide(location);
+
+    //    if(num4 == 1) {
+    //        Location* location;
+    //        aUber.requestRide(location);
+    //    }
     // check if a uber account exist. if not, createAccount();
     //  createAccount(email, firstName, lastName, phoneNumber);
     // it should save the account
