@@ -2,7 +2,7 @@
 #define DEBIT_H
 #include <fstream>
 #include <iostream>
-#include <string.h>
+#include <string>
 using namespace std;
 class Debit
 {
@@ -11,8 +11,10 @@ public:
     ~Debit();
     void print();
     static void test();
-    void saveFile(string fileName);
-    void loadFile(string fileName);
+
+    void saveFile(ofstream* off);
+    Debit* loadFile(ifstream* in);
+
     void setDebitCardNumber(string debitCardNumber);
     string getDebitCardNumber();
     void setFirstName(string firstName);
@@ -25,6 +27,7 @@ public:
     int getYear();
     void setSecurityCode(string securityCode);
     string getSecurityCode();
+
     void enterCreditCard();
 
 private:

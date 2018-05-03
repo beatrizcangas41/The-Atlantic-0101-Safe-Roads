@@ -2,10 +2,10 @@
 
 Debit::Debit()
 {
-    debitCardNumber;
-    firstName;
-    lastName;
-    securityCode;
+//    debitCardNumber;
+//    firstName;
+//    lastName;
+//    securityCode;
     month = 0;
     year = 0;
 }
@@ -78,44 +78,41 @@ void Debit::print()
 void Debit::test()
 {
     Debit Card;
-    Card.enterCreditCard();
-    Card.print();
-    cout << endl << endl;
 
-    Card.saveFile("DebitCard.txt");
-    cout << "testing Load: " << endl;
-    Card.loadFile("DebitCard.txt");
-}
-
-void Debit::saveFile(string fileName)
-{
-    ofstream out;
-    out.open("DebitCard.txt");
-    out << firstName << endl;
-    out << lastName << endl;
-    out << debitCardNumber << endl;
-    out << month << endl;
-    out << year << endl;
-
-    out.close();
-}
-
-void Debit::loadFile(string fileName)
-{
-    ifstream in("DebitCard.txt");
-    char line1[20];
-    char line2[20];
+    ifstream in("uberAccount.txt");
     if(in.is_open()) {
-        in >> line1;
-        in >> line2;
-        cout << "Name on Credit Card: " << line1 << " " << line2 << endl;
-        in >> line1;
-        cout << "Debit Card Number: " << debitCardNumber << endl;
-        in >> line1;
-        in >> line2;
-        cout << "Expiration Date: " << month << "|" << year << endl;
+        Debit* pDebit = Card.loadFile(&in);
+        pDebit->print();
+    } else {
+        cout << "Could not open file to write" << endl;
     }
     in.close();
+}
+
+void Debit::saveFile(ofstream* out)
+{
+    *out << firstName << endl;
+    *out << lastName << endl;
+    *out << debitCardNumber << endl;
+    *out << month << endl;
+    *out << year << endl;
+}
+
+Debit* Debit::loadFile(ifstream* in)
+{
+    Debit* aDebit = new Debit();
+    char str[100];
+    (*in).getline(str,100);
+    aDebit->setFirstName(str);
+    (*in).getline(str,100);
+    aDebit->setLastName(str);
+    (*in).getline(str,100);
+    aDebit->setDebitCardNumber(str);
+    (*in).getline(str,100);
+    aDebit->setMonth(atoi(str));
+    (*in).getline(str,100);
+    aDebit->setYear(atoi(str));
+    return aDebit;
 }
 
 void Debit::enterCreditCard()

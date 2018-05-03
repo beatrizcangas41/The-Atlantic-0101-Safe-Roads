@@ -19,6 +19,8 @@
 #include "contactsException.h"
 #include "sensors.h"
 #include "car.h"
+#include "debit.h"
+#include "uber.h"
 //#include "saferoads.h"
 
 using namespace rapidjson;
@@ -126,7 +128,9 @@ int main(void) {
 //    Connection::test();
 //    Twitter::test();
 //    EmergencyContacts::etest();
+//    Debit::test();
+    Uber::test();
 
-    process();
+//    process();
     return 0;
 }
