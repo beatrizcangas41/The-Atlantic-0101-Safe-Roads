@@ -22,6 +22,7 @@
 #include "debit.h"
 #include "bankaccount.h"
 #include "uber.h"
+#include "exceptions.h"
 
 using namespace rapidjson;
 using namespace std;
@@ -192,6 +193,9 @@ void process() {
     }
     catch(VirtualException& e) {
         e.print1();
+    }
+    catch(BaseException& e) {
+        e.print();
     }
 }
 

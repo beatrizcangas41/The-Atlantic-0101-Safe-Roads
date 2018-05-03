@@ -138,6 +138,7 @@ void Uber::process(Driver driver)
     loc->load("location.txt");
 
     aUber.requestRide(loc);
+    delete loc;
 
     //    if(num4 == 1) {
     //        Location* location;
