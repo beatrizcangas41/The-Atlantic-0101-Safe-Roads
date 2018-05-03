@@ -82,10 +82,11 @@ int Uber::options()
     return decision;
 }
 void Uber::requestRide(Location* location)
-{
-    string destination;
+{    string destination;
+    cout<< "your location is "<< &location<< endl;
     cout << " where would you like to go?" << endl;
     cin >> destination;
+    cout<<"from "<<&location<<"to "<<destination<<endl;
     cout << " your Uber will be on its way"
     cout<< "the total amount will be 10 dollars."
 }
@@ -95,7 +96,7 @@ void Uber::print()
 }
 void Uber::process(Driver driver)
 {
-    int num1, num2, num3, num4;
+    int num1;
     Uber aUber;
     BankAccount aBankAccount;
     Debit aDebit;
