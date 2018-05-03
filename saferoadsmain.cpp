@@ -36,7 +36,6 @@ void process() {
         cout << "******************************************************************" << endl;
 
         Driver aDriver;
-        EmergencyContacts aContacts;
 
         bool driverLoad = aDriver.dLoad("driver.txt");
         if(!driverLoad) {
@@ -50,6 +49,7 @@ void process() {
             cout << "------------------------------------------------------------------" << endl;
 
             Driver::dProcess();
+            aDriver.dLoad("driver.txt");
         }
 
         Car aCar;
@@ -63,6 +63,8 @@ void process() {
             aCar.newCar();
         }
 
+        EmergencyContacts aContacts;
+
         bool contactsLoad = aContacts.eLoad("emergencyContacts.txt");
         if(!contactsLoad) {
             cout << "Step 3:" << endl;
@@ -74,6 +76,7 @@ void process() {
             cout << "------------------------------------------------------------------" << endl;
 
             EmergencyContacts::eProcess();
+            aContacts.eLoad("emergencyContacts.txt");
         }
 
         cout << endl << "                       *** APPLICATION ***" << endl;
@@ -135,7 +138,6 @@ void process() {
 
             if(userSelection == 1) {
                 int size = aContacts.getSize();
-
                 Contacts* pContact;
 
                 for(int i=0; i < size; i++) {
