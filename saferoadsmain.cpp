@@ -134,13 +134,13 @@ void process() {
             aConnection.getLocation();
 
             if(userSelection == 1) {
+                int size = aContacts.getSize();
 
-                Contacts* aContactsArr[3];
-                for(int i=0; i < 3; i++) {
-                    aContactsArr[i] = aContacts.getContact(i);
-                    if (!aContactsArr[i]->getEmailAddress().empty()) {
-                        aConnection.sendMessgaeToContact(aDriver, aContactsArr[i]);
-                    }
+                Contacts* pContact;
+
+                for(int i=0; i < size; i++) {
+                    pContact = aContacts.getContact(i);
+                    aConnection.sendMessgaeToContact(aDriver, pContact);
                 }
 
                 cout << "------------------------------------------------------------------" << endl;

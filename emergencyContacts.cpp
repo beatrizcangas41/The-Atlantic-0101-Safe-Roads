@@ -35,7 +35,7 @@ void EmergencyContacts::eSave(string fileName)
 {
     ofstream out("emergencyContacts.txt");
     if(out.is_open()) {
-
+        out<<size<<endl;
         for(int i = 0; i < size; i++) {
             out << pContacts[i]->getFirstName() << endl;
             out << pContacts[i]->getLastName() << endl;
@@ -53,11 +53,23 @@ Contacts* EmergencyContacts::getContact(int index) {
     return pContacts[index];
 }
 
+int EmergencyContacts::getSize()
+{
+    return size;
+}
+
+void EmergencyContacts::setSize(int size) {
+    this->size = size;
+}
+
 bool EmergencyContacts::eLoad(string fileName)
 {
     ifstream in(fileName);
+    char tmp[10];
     if(in.is_open()) {
-        for(int i=0;i<3;i++){
+        in>>size;
+        in.getline(tmp,1);
+        for(int i=0;i<size;i++){
             pContacts[i] = Contacts::load(&in);
         }
         return 1;
@@ -197,16 +209,20 @@ void  EmergencyContacts::etest()
 
     EmergencyContacts aContacts;
     bool contactLoaded = aContacts.eLoad("emergencyContacts.txt");
-    cout << contactLoaded;
+//    cout << contactLoaded;
 
-    Contacts* arr[3];
-    for (int i = 0; i < 3; i++) {
-        arr[i] = aContacts.getContact(i);
-    }
+    Contacts* contact = aContacts.getContact(0);
 
-    cout << arr[0]->getFirstName() << endl;
-    cout << arr[1]->getFirstName() << endl;
-    cout << arr[2]->getFirstName() << endl;
+    cout << contact->getLastName();
+
+//    Contacts* arr[3];
+//    for (int i = 0; i < 3; i++) {
+//        arr[i] = aContacts.getContact(i);
+//    }
+
+//    cout << arr[0]->getFirstName() << endl;
+//    cout << arr[1]->getFirstName() << endl;
+//    cout << arr[2]->getFirstName() << endl;
 
 
 //    cout << "Contacts: " << endl << endl;

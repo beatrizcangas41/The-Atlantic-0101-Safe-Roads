@@ -25,6 +25,8 @@ public:
     static void etest();
     void eprint();
     static void eProcess();
+    int getSize();
+    void setSize(int size);
 private:
     int size;
     Contacts* pContacts[MAX_CONTACTS_SIZE];
