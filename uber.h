@@ -2,6 +2,9 @@
 #define UBER_H
 #include "bankaccount.h"
 #include "debit.h"
+#include "location.h"
+#include "driver.h"
+#include "contacts.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -17,10 +20,10 @@ public:
         string phoneNumber); 
     int options();
     void transaction(int choice);
-    int requestRide(Location* location);
+    void requestRide(Location* location);
     void saveFile(string fileName);
     bool loadFile(string fileName);
-    void process();
+    static void process(Driver driver);
     void print();
     static void test();
 

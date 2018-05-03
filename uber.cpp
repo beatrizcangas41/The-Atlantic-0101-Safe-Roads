@@ -28,7 +28,7 @@ void Uber::saveFile(string fileName)
         out << phoneNumber << endl;
         out << password << endl;
     } else {
-        cout << "Could not open file to write" << endl;
+//        cout << "Could not open file to write" << endl;
     }
     out.close();
 }
@@ -50,7 +50,7 @@ bool Uber::loadFile(string fileName)
         password = str;
         return 1;
     } else {
-        cout << "Could not open file to read" << endl;
+//        cout << "Could not open file to read" << endl;
         return 0;
     }
     return 0;
@@ -80,32 +80,44 @@ int Uber::options()
     cin >> decision;
     return decision;
 }
-int Uber::requestRide(Location* location)
+void Uber::requestRide(Location* location)
 {
-    cout << " where would you like to go?" cin >> destination;
+    string destination;
+    cout << " where would you like to go?" << endl;
+    cin >> destination;
 }
 
 void Uber::print()
 {
 }
-void Uber::process()
+void Uber::process(Driver driver)
 {
-    int num1, num2, num3, num4;
+//    int num1, num2, num3, num4;
+    Uber aUber;
+    BankAccount aBankAccount;
+    Debit aDebit;
 
-    num1 = loadFile("uberAccount.txt");
-    if(num1 == 0) {
-        cout << "creating account" << endl;
-        createAccount("gmail", "danny", "rios", "123456789");
+    bool accountLoad = aUber.loadFile("uberAccount.txt");
+    if(!accountLoad) {
+        string email = driver.getEmailAddress();
+        string fName = driver.getFirstName();
+        string lName = driver.getLastName();
+        string phone = driver.getPhoneNumber();
+        cout << "creating account..." << endl;
+        aUber.createAccount(email, fName, lName, phone);
     }
 
-    num2 = loadFile("BankAccount.txt");
-    num3 = loadFile("DebitCard.txt");
-    if(num2 == 0 && num3 == 0) {
-        num4 = options();
+    bool bankAccountLoad = aBankAccount.loadFile("bankAccount.txt");
+    bool debitCardLoad = aDebit.loadFile("debitAccount.txt");
+
+    if(!bankAccountLoad && !debitCardLoad) {
+        aUber.options();
     }
-    if(num4 == 1) {
-        requestRide(location * location);
-    }
+
+//    if(num4 == 1) {
+//        Location* location;
+//        aUber.requestRide(location);
+//    }
     // check if a uber account exist. if not, createAccount();
     //  createAccount(email, firstName, lastName, phoneNumber);
     // it should save the account

@@ -22,7 +22,6 @@
 #include "debit.h"
 #include "bankaccount.h"
 #include "uber.h"
-//#include "saferoads.h"
 
 using namespace rapidjson;
 using namespace std;
@@ -46,74 +45,66 @@ void process() {
             eContacts[i] = aContacts.getContact(i);
         }
 
-//        Sensors aSensor;
-//        Car aCar;
-//        if(!aCar.load()){
-//            aCar.newCar();
-//        }
-//
-//        double avg =aSensor.calculateAverage();
-//        cout << avg << endl;
-//        if(avg<LEGAL_LIMIT) {
-//            aCar.unlockCar();
-//            cout << "Lock status: " << aCar.getLockStatus() << endl;
-//        }else{
-//            aCar.lockCar();
-//            cout << "Lock status: " << aCar.getLockStatus() << endl;
-////            GPS aGPS;
-////            aGPS.getCoordinates();
-//
-////            Location aLocation;
-////            aLocation.load("location.txt");
-//
-////            aLocation.setLocation();
-////            aLocation.setLocation(26.268,-80.1021);
-////            aLocation.getGeoData();
-////            aLocation.print();
-//
-////            aLocation.save("location.txt");
-//
-            Connection aConnection;
-            aConnection.getLocation();
-//            aConnection.print();
-//
-            for(int i=0; i < 3; i++) {
-                string firstName = eContacts[i]->getFirstName();
-                string lastName = eContacts[i]->getLastName();
-                string email = eContacts[i]->getEmailAddress();
-                if (!email.empty()) {
-                    aConnection.sendMessgaeToContact(aDriver, eContacts[i]);
+        Sensors aSensor;
+        Car aCar;
+        if(!aCar.load()){
+            aCar.newCar();
+        }
+
+        double avg =aSensor.calculateAverage();
+        cout << avg << endl;
+        if(avg<LEGAL_LIMIT) {
+            aCar.unlockCar();
+            cout << "Lock status: " << aCar.getLockStatus() << endl;
+        }else{
+            aCar.lockCar();
+            cout << "Lock status: " << aCar.getLockStatus() << endl;
+
+            Location aLocation;
+            aLocation.setLocation();
+            aLocation.getGeoData();
+            aLocation.save("location.txt");
+            aLocation.print();
+
+            int userSelection = 0;
+            cout << "What would you like to do?" << endl;
+            cout << "    1. Send contact a message" << endl;
+            cout << "    2. Request an UBER" << endl << endl;
+
+            cout << "Enter your choice: ";
+            cin >> userSelection;
+
+            if(userSelection == 1) {
+                Connection aConnection;
+                aConnection.getLocation();
+                aConnection.print();
+
+                for(int i=0; i < 3; i++) {
+                    if (!eContacts[i]->getEmailAddress().empty()) {
+                        aConnection.sendMessgaeToContact(aDriver, eContacts[i]);
+                    }
                 }
+
+                Twitter aTwitter;
+                aTwitter.getLocation();
+                aTwitter.sendTweet();
+
+                cout << endl << endl << "Activating the battery.  Counting down 10 hours before sending driver the vehicle's location" << endl << endl;
+                aSensor.activateBattery();
+
+                string firstName = aDriver.getFirstName();
+                string lastName = aDriver.getLastName();
+                string email = aDriver.getEmailAddress();
+
+                aConnection.sendMessageToDriver(email, firstName, lastName);
+                aSensor.deactivateBattery();
+                if(!aSensor.getBatteryStatus()) {
+                    cout << "Battery deactivated." << endl;
+                }
+            } else if(userSelection == 2) {
+                Uber::process(aDriver);
             }
-//
-//            Twitter aTwitter;
-//            aTwitter.getLocation();
-//            aTwitter.sendTweet();
-//
-//            /* Timer goes here */
-//            cout << endl << endl << "Activating the battery.  Counting down 10 hours before sending driver the vehicle's location" << endl << endl;
-//            aSensor.activateBattery();
-//////
-//            string firstName;
-//            string lastName;
-//            string email;
-//            email = aDriver.getEmailAddress();
-//            firstName = aDriver.getFirstName();
-//            lastName = aDriver.getLastName();
-//
-//            aConnection.sendMessageToDriver(email, firstName, lastName);
-//            aSensor.deactivateBattery();
-//            if(!aSensor.getBatteryStatus()) {
-//                cout << "Battery deactivated." << endl;
-//            }
-//
-//        }
-//
-////        contacts.eprint();
-
-
-
-
+        }
     }
     catch(VirtualException& e) {
         e.print1();
@@ -129,10 +120,10 @@ int main(void) {
 //    Connection::test();
 //    Twitter::test();
 //    EmergencyContacts::etest();
-    Debit::test();
+//    Debit::test();
 //    BankAccount::test();
-//    Uber::test();
+//    Uber::process();
 
-//    process();
+    process();
     return 0;
 }

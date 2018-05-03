@@ -123,7 +123,7 @@ bool Debit::loadFile(string fileName)
         year = atoi(str);
         return 1;
     }else{
-        cout<<"Could not open file to read"<<endl;
+//        cout<<"Could not open file to read"<<endl;
         return 0;
     }
     in.close();
