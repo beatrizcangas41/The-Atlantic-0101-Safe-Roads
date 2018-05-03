@@ -14,10 +14,10 @@ public:
     void createAccount(string email,
         string firstName,
         string lastName,
-        string phoneNumber); // creates a account by using a phonenumber
+        string phoneNumber); 
     int options();
     void transaction(int choice);
-    // int requestRide(Location* location, int uberID);
+    int requestRide(Location* location);
     void saveFile(string fileName);
     bool loadFile(string fileName);
     void process();
@@ -25,8 +25,8 @@ public:
     static void test();
 
 private:
-    // int location;
-
+    
+    
     string email;
     string password;
     string firstName;
