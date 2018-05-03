@@ -12,7 +12,6 @@ private:
     double balance;
     string routingNumber;
     string accountNumber;
-    string filename;
 
 public:
     BankAccount();
@@ -20,10 +19,18 @@ public:
     void linkAccount();
     void deposit();
     void withdraw();
-    void setBankAccount();
-    void getBankAccount();
-    void saveFile(string fileName);
-    void loadFile(string fileName);
+//    void setBankAccount();
+//    void getBankAccount();
+
+    void setBalance(double balance);
+    double getBalance();
+    void setRoutingNumber(string routingNumber);
+    string getRoutingNumber();
+    void setAccountNumber(string accountNumber);
+    string getAccountNumber();
+
+    void saveFile(ofstream* out);
+    BankAccount* loadFile(ifstream* in);
     void print();
     void static test();
 };

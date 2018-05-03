@@ -79,6 +79,19 @@ void Debit::test()
 {
     Debit Card;
 
+    cout<<endl<<"entering info..."<<endl;
+    Card.enterCreditCard();
+
+    cout<<endl<<"saving file..."<<endl;
+    ofstream out("uberAccount.txt");
+    if(out.is_open()){
+         Card.saveFile(&out);
+    }else{
+          cout<<"Could not open file to write"<<endl;
+    }
+    out.close();
+
+    cout<<endl<<"loading file..."<<endl;
     ifstream in("uberAccount.txt");
     if(in.is_open()) {
         Debit* pDebit = Card.loadFile(&in);

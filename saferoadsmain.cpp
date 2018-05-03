@@ -20,6 +20,7 @@
 #include "sensors.h"
 #include "car.h"
 #include "debit.h"
+#include "bankaccount.h"
 #include "uber.h"
 //#include "saferoads.h"
 
@@ -129,7 +130,8 @@ int main(void) {
 //    Twitter::test();
 //    EmergencyContacts::etest();
 //    Debit::test();
-    Uber::test();
+    BankAccount::test();
+//    Uber::test();
 
 //    process();
     return 0;
