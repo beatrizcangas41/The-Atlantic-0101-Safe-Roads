@@ -26,6 +26,7 @@ void Uber::saveFile(string fileName)
         out << firstName << endl;
         out << lastName << endl;
         out << phoneNumber << endl;
+        out << password << endl;
     } else {
         cout << "Could not open file to write" << endl;
     }
@@ -45,6 +46,8 @@ bool Uber::loadFile(string fileName)
         lastName = str;
         in.getline(str,100);
         phoneNumber = str;
+        in.getline(str,100);
+        password = str;
         return 1;
     }
     else {
@@ -108,6 +111,7 @@ bool Uber::loadFile(string fileName)
     {
 
         Uber me;
+        me.createAccount("acraun@fau.edu","Aubrey","Craun","222-333-4444");
         //loadFile("uberAcco")
         // me.account();
         // choice = me.options();
